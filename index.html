@@ -4,7 +4,7 @@
 <title>My Projects</title>
 <style>
 body {
-  font-family: sans-serif;
+  font-family: "Cutive Mono", monospace;
   margin: 0;
   padding: 0;
 }
@@ -24,6 +24,7 @@ body {
 .project-image {
   width: 100%;
   height: 200px;
+  border-radius: 10px;
 }
 
 .project-title {
@@ -42,9 +43,47 @@ a {
 .monospace {
   font-family: "Cutive Mono", monospace;
 }
+
+/* CSS to style the tab */
+#tab {
+  font-family: "Cutive Mono", monospace;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+}
+
+#tab header {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+#tab p {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
 </style>
 </head>
 <body>
+<div id="tab">
+    <p>Welcome to my projects.<br> -Rishi
+<br>
+ <br>
+ If you have any inquiries feel free to email me at iyer.ris@northeastern.edu.
+</p></p>
+</div>
+<!-- Button to toggle the tab -->
+<button id="toggle-button">Toggle tab</button>
 <div class="container">
   <h1>My Projects</h1>
   <div class="project">
@@ -66,5 +105,44 @@ a {
     <a href="project3.html" class="monospace">Learn more</a>
   </div>
 </div>
+
+<script>
+  // JavaScript to toggle the tab and make it moveable
+  const tab = document.getElementById("tab");
+  const toggleButton = document.getElementById("toggle-button");
+
+  let isDragging = false;
+  let currentMousePosition;
+  let currentTabPosition;
+
+  function toggleTab() {
+    if (tab.style.display === "none") {
+      tab.style.display = "block";
+    } else {
+      tab.style.display = "none";
+    }
+  }
+
+  tab.addEventListener("mousedown", (event) => {
+    isDragging = true;
+    currentMousePosition = { x: event.clientX, y: event.clientY };
+    currentTabPosition = { x: tab.offsetLeft, y: tab.offsetTop };
+  });
+
+  document.addEventListener("mousemove", (event) => {
+    if (isDragging) {
+      const dx = event.clientX - currentMousePosition.x;
+      const dy = event.clientY - currentMousePosition.y;
+      tab.style.left = `${currentTabPosition.x + dx}px`;
+      tab.style.top = `${currentTabPosition.y + dy}px`;
+    }
+  });
+
+  document.addEventListener("mouseup", (event) => {
+    isDragging = false;
+  });
+
+  toggleButton.addEventListener("click", toggleTab);
+</script>
 </body>
 </html>
