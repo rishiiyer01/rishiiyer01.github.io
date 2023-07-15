@@ -3,13 +3,11 @@
 <head>
 <title>My Projects</title>
 <style>
-Copy code
 body {
   font-family: "Monaco", monospace;
   margin: 0;
   padding: 0;
 }
-
 
 .container {
   width: 100%;
@@ -46,9 +44,8 @@ a {
   font-family: "Monaco", monospace;
 }
 
-/* CSS to style the tab */
 #tab {
-  font-family: "Cutive Mono", monospace;
+  font-family: "Monaco", monospace;
   color: #ffffff;
   background-color: #000000;
   border-radius: 10px;
@@ -74,10 +71,58 @@ a {
   margin: 0;
   padding: 0;
 }
+
+#tab::before,
+#tab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-left: 2px solid #ffffff;
+  border-top: 2px solid #ffffff;
+}
+
+#tab::before {
+  transform: rotate(45deg);
+}
+
+#tab::after {
+  transform: rotate(-45deg);
+}
+
+#tab-corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-left: 2px solid #ffffff;
+  border-top: 2px solid #ffffff;
+  transform: rotate(90deg);
+}
+
+#toggle-button {
+  background-color: #fdd835;
+  color: #000000;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
 </style>
 </head>
 <body>
 <div id="tab">
+    <div id="tab-corner"></div>
     <p>Welcome to my projects.<br> -Rishi
 <br>
  <br>
@@ -85,7 +130,7 @@ a {
 </p></p>
 </div>
 <!-- Button to toggle the tab -->
-<button id="toggle-button">Toggle tab</button>
+<button id="toggle-button">-</button>
 <div class="container">
   <h1>My Projects</h1>
   <div class="project">
