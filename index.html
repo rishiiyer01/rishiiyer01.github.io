@@ -7,7 +7,47 @@
     <!-- Google font for the "insert key here" text -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        /* ... [your other styles remain unchanged] ... */
+        body {
+            font-family: "courier-std", monospace;
+            margin: 0;
+            padding: 0;
+            background: url('diffuse.gif') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        #tab {
+            font-family: "courier-std", monospace;
+            color: #ffffff;
+            background-color: #000000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            padding: 20px;
+        }
+
+        #toggle-button {
+            background-color: #fdd835;
+            color: #000000;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+        }
 
         /* Updated styles for the dashed box */
         #dashed-box {
@@ -45,7 +85,21 @@
     <button id="toggle-button">-</button>
 
     <script>
-        /* ... [your other scripts remain unchanged] ... */
+        const tab = document.getElementById("tab");
+        const toggleButton = document.getElementById("toggle-button");
+        const dashedBox = document.getElementById("dashed-box");
+
+        let isDragging = false;
+        let currentMousePosition;
+        let currentTabPosition;
+
+        function toggleTab() {
+            if (tab.style.display === "none") {
+                tab.style.display = "block";
+            } else {
+                tab.style.display = "none";
+            }
+        }
 
         function isPartialBoxInsideDashedBox(percentage = 50) {
             const tabRect = tab.getBoundingClientRect();
@@ -55,6 +109,18 @@
             const tabArea = tabRect.width * tabRect.height;
             return (overlapArea / tabArea) * 100 >= percentage;
         }
+
+        tab.addEventListener("mousedown", (event) => {
+            isDragging = true;
+            currentMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+            currentTabPosition = {
+                x: tab.offsetLeft,
+                y: tab.offsetTop
+            };
+        });
 
         document.addEventListener("mousemove", (event) => {
             if (isDragging) {
@@ -71,11 +137,10 @@
             }
         });
 
-        document.addEventListener("mouseup", (event) => {
+        document.addEventListener("mouseup", () => {
             isDragging = false;
         });
 
+        toggleButton.addEventListener("click", toggleTab);
     </script>
 </body>
-
-</html>
