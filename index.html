@@ -110,22 +110,22 @@
             return (overlapArea / tabArea) * 100 >= percentage;
         }
 
-        tab.addEventListener("mousedown", (event) => {
+        function startDrag(event) {
             isDragging = true;
             currentMousePosition = {
-                x: event.clientX,
-                y: event.clientY
+                x: event.clientX || event.touches[0].clientX,
+                y: event.clientY || event.touches[0].clientY
             };
             currentTabPosition = {
                 x: tab.offsetLeft,
                 y: tab.offsetTop
             };
-        });
+        }
 
-        document.addEventListener("mousemove", (event) => {
+        function duringDrag(event) {
             if (isDragging) {
-                const dx = event.clientX - currentMousePosition.x;
-                const dy = event.clientY - currentMousePosition.y;
+                const dx = (event.clientX || event.touches[0].clientX) - currentMousePosition.x;
+                const dy = (event.clientY || event.touches[0].clientY) - currentMousePosition.y;
                 const newX = currentTabPosition.x + dx;
                 const newY = currentTabPosition.y + dy;
                 tab.style.left = `${newX}px`;
@@ -135,11 +135,20 @@
                     window.location.href = 'projects.html';
                 }
             }
-        });
+        }
 
-        document.addEventListener("mouseup", () => {
+        function endDrag() {
             isDragging = false;
-        });
+        }
+
+        tab.addEventListener("mousedown", startDrag);
+        document.addEventListener("mousemove", duringDrag);
+        document.addEventListener("mouseup", endDrag);
+
+        // Touch events for mobile
+        tab.addEventListener("touchstart", startDrag);
+        document.addEventListener("touchmove", duringDrag);
+        document.addEventListener("touchend", endDrag);
 
         toggleButton.addEventListener("click", toggleTab);
     </script>
