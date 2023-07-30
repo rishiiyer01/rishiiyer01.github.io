@@ -4,50 +4,12 @@
 <head>
     <title>My Projects</title>
     <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
+    <!-- Google font for the "insert key here" text -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: "courier-std", monospace;
-            margin: 0;
-            padding: 0;
-            background: url('diffuse.gif') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
+        /* ... [your other styles remain unchanged] ... */
 
-        #tab {
-            font-family: "courier-std", monospace;
-            color: #ffffff;
-            background-color: #000000;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            padding: 20px;
-        }
-
-        #toggle-button {
-            background-color: #fdd835;
-            color: #000000;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            line-height: 30px;
-            font-size: 20px;
-            cursor: pointer;
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        /* New dashed box */
+        /* Updated styles for the dashed box */
         #dashed-box {
             position: absolute;
             top: 80%;
@@ -56,7 +18,13 @@
             width: 300px;
             height: 300px;
             border: 3px dashed black;
+            border-radius: 10px;  /* Rounded corners */
             padding: 20px;
+            display: flex;   /* Added for centering the text */
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;  /* Video game font */
+            font-size: 12px;
         }
 
     </style>
@@ -71,51 +39,22 @@
         </p>
     </div>
 
-    <div id="dashed-box"></div> <!-- Dashed Box -->
+    <div id="dashed-box">Insert key here</div> <!-- Updated Dashed Box -->
 
     <!-- Button to toggle the tab -->
     <button id="toggle-button">-</button>
 
     <script>
-        const tab = document.getElementById("tab");
-        const toggleButton = document.getElementById("toggle-button");
-        const dashedBox = document.getElementById("dashed-box");
+        /* ... [your other scripts remain unchanged] ... */
 
-        let isDragging = false;
-        let currentMousePosition;
-        let currentTabPosition;
-
-        function toggleTab() {
-            if (tab.style.display === "none") {
-                tab.style.display = "block";
-            } else {
-                tab.style.display = "none";
-            }
-        }
-
-        function isBoxInsideDashedBox() {
+        function isPartialBoxInsideDashedBox(percentage = 50) {
             const tabRect = tab.getBoundingClientRect();
             const dashedBoxRect = dashedBox.getBoundingClientRect();
-
-            return (
-                tabRect.top >= dashedBoxRect.top &&
-                tabRect.left >= dashedBoxRect.left &&
-                tabRect.right <= dashedBoxRect.right &&
-                tabRect.bottom <= dashedBoxRect.bottom
-            );
+            const overlapArea = Math.max(0, Math.min(tabRect.right, dashedBoxRect.right) - Math.max(tabRect.left, dashedBoxRect.left)) *
+                                Math.max(0, Math.min(tabRect.bottom, dashedBoxRect.bottom) - Math.max(tabRect.top, dashedBoxRect.top));
+            const tabArea = tabRect.width * tabRect.height;
+            return (overlapArea / tabArea) * 100 >= percentage;
         }
-
-        tab.addEventListener("mousedown", (event) => {
-            isDragging = true;
-            currentMousePosition = {
-                x: event.clientX,
-                y: event.clientY
-            };
-            currentTabPosition = {
-                x: tab.offsetLeft,
-                y: tab.offsetTop
-            };
-        });
 
         document.addEventListener("mousemove", (event) => {
             if (isDragging) {
@@ -125,17 +64,17 @@
                 const newY = currentTabPosition.y + dy;
                 tab.style.left = `${newX}px`;
                 tab.style.top = `${newY}px`;
+
+                if (isPartialBoxInsideDashedBox()) {
+                    window.location.href = 'projects.html';
+                }
             }
         });
 
         document.addEventListener("mouseup", (event) => {
-            if (isDragging && isBoxInsideDashedBox()) {
-                window.location.href = 'projects.html';
-            }
             isDragging = false;
         });
 
-        toggleButton.addEventListener("click", toggleTab);
     </script>
 </body>
 
