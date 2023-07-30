@@ -77,7 +77,6 @@
     <button id="toggle-button">-</button>
 
     <script>
-        // JavaScript to toggle the tab and make it moveable
         const tab = document.getElementById("tab");
         const toggleButton = document.getElementById("toggle-button");
         const dashedBox = document.getElementById("dashed-box");
@@ -92,6 +91,18 @@
             } else {
                 tab.style.display = "none";
             }
+        }
+
+        function isBoxInsideDashedBox() {
+            const tabRect = tab.getBoundingClientRect();
+            const dashedBoxRect = dashedBox.getBoundingClientRect();
+
+            return (
+                tabRect.top >= dashedBoxRect.top &&
+                tabRect.left >= dashedBoxRect.left &&
+                tabRect.right <= dashedBoxRect.right &&
+                tabRect.bottom <= dashedBoxRect.bottom
+            );
         }
 
         tab.addEventListener("mousedown", (event) => {
@@ -114,17 +125,13 @@
                 const newY = currentTabPosition.y + dy;
                 tab.style.left = `${newX}px`;
                 tab.style.top = `${newY}px`;
-
-                // Check if the box is inside the dashed box
-                if (newX > dashedBox.offsetLeft && newY > dashedBox.offsetTop &&
-                    newX < dashedBox.offsetLeft + dashedBox.offsetWidth - tab.offsetWidth &&
-                    newY < dashedBox.offsetTop + dashedBox.offsetHeight - tab.offsetHeight) {
-                    window.location.href = 'projects.html'; // Load the projects page
-                }
             }
         });
 
         document.addEventListener("mouseup", (event) => {
+            if (isDragging && isBoxInsideDashedBox()) {
+                window.location.href = 'projects.html';
+            }
             isDragging = false;
         });
 
