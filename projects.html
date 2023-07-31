@@ -7,57 +7,61 @@
     <style>
         body {
             font-family: "courier-std", monospace;
+            background-color: #F7D7C4;
             margin: 0;
             padding: 0;
-            background-color: #F2F2F2;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #FFFAF0;
         }
 
         h1 {
             text-align: center;
-            padding-top: 50px;
-        }
-
-        .projects-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 50px 0;
+            color: #FF4500;
         }
 
         .project {
-            background-color: #ffffff;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 70%;
+            border: 3px dotted #FF4500;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            background-color: #FFEBE6;
+        }
+
+        .project h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .project p {
+            font-size: 18px;
+            color: #696969;
         }
 
     </style>
 </head>
 
 <body>
-    <h1>Rishi's Projects</h1>
-    
-    <div class="projects-container">
+    <div class="container">
+        <h1>Rishi's Projects</h1>
+
         <div class="project">
-            <h2>Project 1: Quantum Simulations</h2>
-            <p>Details about the quantum simulations project, exploring the properties of qubits in a controlled environment.</p>
-        </div>
-        
-        <div class="project">
-            <h2>Project 2: Machine Learning Framework</h2>
-            <p>An in-depth analysis and development of a custom machine learning framework tailored for real-time predictions.</p>
-        </div>
-        
-        <div class="project">
-            <h2>Project 3: Computational Fluid Dynamics</h2>
-            <p>Using computational methods to simulate and analyze fluid dynamics in microgravity environments.</p>
+            <h2>Project 1</h2>
+            <p>Description for project 1. This is a brief overview of what this project is about and what it does.</p>
         </div>
 
-        <!-- Add more projects as needed -->
+        <div class="project">
+            <h2>Project 2</h2>
+            <p>Description for project 2. This is a brief overview of what this project is about and what it does.</p>
+        </div>
+
+        <!-- Add more .project divs for more projects -->
+
     </div>
-
 </body>
 
 </html>
