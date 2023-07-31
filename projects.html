@@ -7,50 +7,40 @@
     <style>
         body {
             font-family: 'Space Mono', monospace;
-            background-color: #FFF5E1; /* Cream background */
+            background-color: #FFFFFF; /* White background */
             margin: 0;
             padding: 0;
+            color: #A9A9A9; /* Grey text */
         }
 
         .container {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            grid-gap: 20px;
-            max-width: 1000px;
+            max-width: 800px;
             margin: 50px auto;
             padding: 20px;
         }
 
         h1 {
-            grid-column: 1/-1;
             text-align: center;
-            color: #FF4500;
+            color: #000000; /* Black for the title */
         }
 
         .project {
-            border: 3px dotted #FF4500;
-            padding: 15px;
-            border-radius: 15px;
-            background-color: #FFEBE6;
+            margin-bottom: 50px;
+        }
+
+        .project img {
+            max-width: 100%; /* Make sure images scale properly */
+            margin-bottom: 15px; /* A little space between the image and the text */
         }
 
         .project h2 {
             font-size: 24px;
             margin-bottom: 10px;
+            color: #000000; /* Black for project titles */
         }
 
         .project p {
             font-size: 18px;
-            color: #696969;
-        }
-
-        /* Different project sizes to create the irregular partitions */
-        .project.large {
-            grid-column: 1/-1;
-        }
-
-        .project.medium {
-            grid-column: span 2;
         }
 
     </style>
@@ -60,24 +50,16 @@
     <div class="container">
         <h1>Rishi's Projects</h1>
 
-        <div class="project large">
+        <div class="project">
+            <img src="path_to_image1.jpg" alt="Description of Image 1">
             <h2>Project 1</h2>
             <p>Description for project 1. This is a brief overview of what this project is about and what it does.</p>
         </div>
 
         <div class="project">
+            <img src="path_to_image2.jpg" alt="Description of Image 2">
             <h2>Project 2</h2>
             <p>Description for project 2. This is a brief overview of what this project is about and what it does.</p>
-        </div>
-
-        <div class="project medium">
-            <h2>Project 3</h2>
-            <p>Description for project 3. This is a brief overview of what this project is about and what it does.</p>
-        </div>
-
-        <div class="project">
-            <h2>Project 4</h2>
-            <p>Description for project 4. This is a brief overview of what this project is about and what it does.</p>
         </div>
 
         <!-- Add more .project divs for more projects -->
