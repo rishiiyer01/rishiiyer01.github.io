@@ -3,30 +3,32 @@
 
 <head>
     <title>Rishi's Projects</title>
-    <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: "courier-std", monospace;
-            background-color: #F7D7C4;
+            font-family: 'Space Mono', monospace;
+            background-color: #FFF5E1; /* Cream background */
             margin: 0;
             padding: 0;
         }
 
         .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-gap: 20px;
             max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #FFFAF0;
         }
 
         h1 {
+            grid-column: 1/-1;
             text-align: center;
             color: #FF4500;
         }
 
         .project {
             border: 3px dotted #FF4500;
-            margin: 20px 0;
             padding: 15px;
             border-radius: 15px;
             background-color: #FFEBE6;
@@ -42,6 +44,15 @@
             color: #696969;
         }
 
+        /* Different project sizes to create the irregular partitions */
+        .project.large {
+            grid-column: 1/-1;
+        }
+
+        .project.medium {
+            grid-column: span 2;
+        }
+
     </style>
 </head>
 
@@ -49,7 +60,7 @@
     <div class="container">
         <h1>Rishi's Projects</h1>
 
-        <div class="project">
+        <div class="project large">
             <h2>Project 1</h2>
             <p>Description for project 1. This is a brief overview of what this project is about and what it does.</p>
         </div>
@@ -57,6 +68,16 @@
         <div class="project">
             <h2>Project 2</h2>
             <p>Description for project 2. This is a brief overview of what this project is about and what it does.</p>
+        </div>
+
+        <div class="project medium">
+            <h2>Project 3</h2>
+            <p>Description for project 3. This is a brief overview of what this project is about and what it does.</p>
+        </div>
+
+        <div class="project">
+            <h2>Project 4</h2>
+            <p>Description for project 4. This is a brief overview of what this project is about and what it does.</p>
         </div>
 
         <!-- Add more .project divs for more projects -->
