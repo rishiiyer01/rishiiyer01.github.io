@@ -151,7 +151,9 @@
         tab.addEventListener("mousedown", startDrag);
         document.addEventListener("mousemove", duringDrag);
         document.addEventListener("mouseup", endDrag);
-
+        window.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
         // Touch events for mobile
         tab.addEventListener("touchstart", startDrag);
         document.addEventListener("touchmove", duringDrag);
