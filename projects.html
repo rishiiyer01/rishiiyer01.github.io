@@ -10,23 +10,13 @@
             background-color: #FFFFFF; /* White background */
             margin: 0;
             padding: 0;
-            color: #A9A9A9; /* Grey text */
+            color: #000000; /* Black text */
         }
 
         .container {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-        }
-
-        h1 {
-            text-align: left; /* Aligned to the left */
-            color: #A9A9A9; /* Grey for the title */
-            font-size: 18px; /* Smaller font size */
-        }
-
-        ul {
-            padding-left: 20px; /* Padding to align the list items */
         }
 
         .project {
@@ -52,26 +42,30 @@
 
 <body>
     <div class="container">
-        <h1>Thrust Vectoring Solid Rocket Motor with Optimal Control</h1>
-        <ul>
-            <p>This project was a research capstone from my final year of mechanical engineering undergrad, where we set out to control a solid rocket motor with a gimbal. Generally speaking, this is quite easy for larger rockets
-                with liquid engines, since the rockets are heavier and have less thrust instability. This is why videos of thrust vector gimbals are often much slower and less entertaining. Here, we used optimal control with the linear quadratic regulator,
-                and the model was trained on the linear time invariant approximation to the aerodynamic differential equation in 2 dimensions (pitch and yaw). The experiment consisted of the same differential equation, but expressed as an inverted pendulum, which can actually
-                be proven to have the same dynamics (since damping is often small on rockets). A kalman filter was used prior to the the linear quadratic regulator to try to weight the open loop model with gyro sensor feedback to aid accuracy and cancel sensor noise covariance cross terms. Mathematically this was a highly interesting problem.    </p>
-        </ul>
         <div class="project">
-            <h2>Phyisics Informed Neural Network to Solve the 1-D Burgers Equation</h2>
+            <h2>Thrust Vectoring Solid Rocket Motor with Optimal Control</h2>
             <ul>
-                <p>This is 1 dimensional burgers equation solution shown before and after training that was solved using automatic differentiation in PyTorch as a physics informed neural network. 
+                <p>This project was a research capstone from my final year of mechanical engineering undergrad, where we set out to control a solid rocket motor with a gimbal. Generally speaking, this is quite easy for larger rockets
+                    with liquid engines, since the rockets are heavier and have less thrust instability. This is why videos of thrust vector gimbals are often much slower and less entertaining. Here, we used optimal control with the linear quadratic regulator,
+                    and the model was trained on the linear time invariant approximation to the aerodynamic differential equation in 2 dimensions (pitch and yaw). The experiment consisted of the same differential equation, but expressed as an inverted pendulum, which can actually
+                    be proven to have the same dynamics (since damping is often small on rockets). A kalman filter was used prior to the the linear quadratic regulator to try to weight the open loop model with gyro sensor feedback to aid accuracy and cancel sensor noise covariance cross terms. Mathematically this was a highly interesting problem.</p>
+                <img src="rocket.gif" alt="Thrust Vector Gimbal Test">
+                <img src="rocket2.gif" alt="Thrust Vector Gimbal Test">
+            </ul>
+        </div>
+        <div class="project">
+            <h2>Physics Informed Neural Network to Solve the 1-D Burgers Equation</h2>
+            <ul>
+                <p>TThis is 1 dimensional burgers equation solution shown before and after training that was solved using automatic differentiation in PyTorch as a physics informed neural network. 
                     The way it works is that given the inputs to a PDE, the backpropagation allows the network to learn the solution to the PDE based on the conservation constraint given by the physics informed loss (usually just the PDE expressed as a homogenous equation), alongside the data driven loss. 
                     This problem only accepts fixed grids, which is an artifact of using a neural network. Currently I am working on methods such as physics informed neural operators which allow grids of any size within a margin by using the fourier transform. Other methods to deal with mesh-like inputs that have any tensor length are common in graph neural networks, which I have researched considerably at Atomic Industries. Top image represents domain initialization, bottom is after learning the PDE. </p>
                 <img src="burg1.png" alt="Initialization of the domain">
                 <img src="burg2.png" alt="Domain after learning the Burgers Equation">
-                <img src="rocket.gif" alt="Thrust Vector Gimbal Test">
-                <img src="rocket2.gif" alt="Thrust Vector Gimbal Test">
             </ul>
         </div>
     </div>
 </body>
 
 </html>
+
+
