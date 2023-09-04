@@ -38,7 +38,13 @@
                 height: 50vw;
             }
         }
-
+        #corner-text {
+            position: fixed;
+            bottom: 10px;
+            right: 50px;
+            font-size: 10px;
+            color: #ffffff;
+        }
         #tab {
             font-family: "courier-std", monospace;
             color: #ffffff;
@@ -104,7 +110,7 @@
 
     <!-- Button to toggle the tab -->
     <button id="toggle-button">-</button>
-
+    <div id="corner-text">2d diffusion simulation+noise, random initial condition</div>
     <script>
         const tab = document.getElementById("tab");
         const toggleButton = document.getElementById("toggle-button");
