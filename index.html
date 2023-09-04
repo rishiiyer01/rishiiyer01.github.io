@@ -24,6 +24,20 @@
             width: 100%;
             height: 100%;
         }
+        @media (min-width: 768px) {
+            #tab, #dashed-box {
+                width: 25vw;
+                height: 25vw;
+            }
+        }
+
+        /* Media query for smaller screen sizes */
+        @media (max-width: 767px) {
+            #tab, #dashed-box {
+                width: 50vw;
+                height: 50vw;
+            }
+        }
 
         #tab {
             font-family: "courier-std", monospace;
