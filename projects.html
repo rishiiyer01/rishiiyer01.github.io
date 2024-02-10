@@ -55,6 +55,17 @@
 <body>
     <div class="container">
         <div class="project">
+            <h2>Graph Retrieval Augmented Generation for Complex Python Codebases</h2>
+            <ul>
+                <p>We won HackAtBrown2024 for best devtool with a near-complete implementation of Graph RAG on codebases. Here, we generate a knowledge graph of a python codebase using a custom parser on python abstract syntax trees. Then we embed the nodes (or chunks) using codebert, a model that is trained on both code and natural language. We store this data and compute a cosine similarity between our prompt (embedded in the same codebert) and our database embedding, which will return the most similar chunk. We can then concatenate this with our original prompt and feed it to a small llm like llama-7b or Mistral-7b. Additional performance can be gained by utilizing fine-tuning on the embeddings and the llm itself using synthetic question-answer pairs from gpt4.</p>
+                <small style="font-family: 'Cutive Mono', monospace;">Active</small>
+                <!-- Add any relevant images here -->
+                <img src="graphrag.jpeg" alt="">
+                <!-- Link to more information -->
+                <p>For more information about this project, visit <a href="https://devpost.com/software/napkin-ymh5f4#updates" style="font-family: 'Cutive Mono', monospace;">our project page, github at bottom of devpost</a>.</p>
+            </ul>
+        </div>
+        <div class="project">
             <h2>Graph Neural Network Research</h2>
             <ul>
                 <p>I cannot say too much here, but the bulk of my recent work at Atomic Industries was on deep graph neural networks and implementing methods on the graphs of part meshes for hierarchical learning. I employed various methods from discrete differential geometry and also my own personal algorithms for curvature and edge detection as additional features fed into the network as well. I think personally what is interesting is that graph neural networks do not require a fixed length input, and that they already have a relative positional embedding given by the adjacency matrix.</p>
