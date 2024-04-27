@@ -65,6 +65,29 @@
 <body>
     <div class="container">
         <div class="project">
+            <h2>Application of Augmented Fourier Neural Operator Methods to Conjugate Heat Transfer Problems</h2>
+            <ul>
+                <p>High fidelity numerical simulations of the Navier-Stokes Equations coupled with the Heat-Advection
+                    equation for various Conjugate Heat Transfer (CHT) problems has proven to be of high cost computationally. These numerical simulations prove crucial to many engineering applications from
+                    the electronics industry to gas turbine simulation to aid with design optimization. Recent efforts
+                    have been made to apply machine learning as a surrogate model for such applications using various
+                    methods such as Variational Auto-Encoders (VAEs) or Physics Informed Neural Networks (PINNs),
+                    which require fixed-size inputs and only learn a single instance of a partial differential equation (PDE).
+                    The Fourier Neural Operator is a relatively new architecture which utilizes fast-fourier-transform
+                    compression to map between continuous function spaces, which allows for a mesh-independent
+                    architecture. We apply this to conjugate heat transfer problems by providing additional features
+                    as input, including a domain mask, and a masked loss function, which allows the model to render
+                    multi-physics, multi-domain problems with a single input. In less that 10 ms, and with an accuracy of
+                    0.992 on the test set, this modified Fourier Neural Operator should be a crutch for future repeatable
+                    conjugate heat transfer simulations in engineering.</p>
+                <small>Thesis</small>
+                <!-- Add any relevant images here -->
+                <img src="Screen Shot 2024-04-27 at 12.09.27 AM.png" alt="">
+                <!-- Link to more information -->
+                <p>Github <a href="https://github.com/rishiiyer01/Thermal-PINO" style="font-family: 'Cutive Mono', monospace;"></a>.</p>
+            </ul>
+        </div>
+        <div class="project">
             <h2>Graph Retrieval Augmented Generation for Complex Python Codebases</h2>
             <ul>
                 <p>We won HackAtBrown2024 for best devtool with a near-complete implementation of Graph RAG on codebases. Here, we generate a knowledge graph of a python codebase using a custom parser on python abstract syntax trees. Then we embed the nodes (or chunks) using codebert, a model that is trained on both code and natural language. We store this data and compute a cosine similarity between our prompt (embedded in the same codebert) and our database embedding, which will return the most similar chunk. We can then concatenate this with our original prompt and feed it to a small llm like llama-7b or Mistral-7b. Additional performance can be gained by utilizing fine-tuning on the embeddings and the llm itself using synthetic question-answer, query-retrieval pairs from gpt4.</p>
