@@ -65,6 +65,22 @@
 <body>
     <div class="container">
         <div class="project">
+            <h2>Experiments: Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
+            <ul>
+                <p>The idea here is to take images and compress them into a discrete embedding space with a vector quantized variational autoencoder. The heuristic for this is that we need unsupervised cluster centers to 
+                    represent the underlying continuous space; these cluster center indices are essentially image tokens. The reason that this is necessary is that ideally we can use the same auto-regressive transformer architecture
+                    to accept and produce images by predicting the PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether this can be trained
+                    as a finetuning process. This comes with some difficulties that we will encounter, such as adding an additional feedforward layer that expands to the new vocabulary size which includes the text tokens and the image tokens (codebook).
+                    
+                </p>
+                <small>Project Active</small>
+                <!-- Add any relevant images here -->
+                <img src="Screenshot 2024-06-05 at 5.34.39PM.png" alt="">
+                <!-- Link to more information -->
+                <p>Github <a href="https://github.com/rishiiyer01/EarlyFusionMultimodalLMs" style="font-family: 'Cutive Mono', monospace;">code available here</a>.</p>
+            </ul>
+        </div>
+        <div class="project">
             <h2>Application of Augmented Fourier Neural Operator Methods to Conjugate Heat Transfer Problems</h2>
             <ul>
                 <p>High fidelity numerical simulations of the Navier-Stokes Equations coupled with the Heat-Advection
@@ -91,7 +107,7 @@
             <h2>Graph Retrieval Augmented Generation for Complex Python Codebases</h2>
             <ul>
                 <p>We won HackAtBrown2024 for best devtool with a near-complete implementation of Graph RAG on codebases. Here, we generate a knowledge graph of a python codebase using a custom parser on python abstract syntax trees. Then we embed the nodes (or chunks) using codebert, a model that is trained on both code and natural language. We store this data and compute a cosine similarity between our prompt (embedded in the same codebert) and our database embedding, which will return the most similar chunk. We can then concatenate this with our original prompt and feed it to a small llm like llama-7b or Mistral-7b. Additional performance can be gained by utilizing fine-tuning on the embeddings and the llm itself using synthetic question-answer, query-retrieval pairs from gpt4.</p>
-                <small>Project Active</small>
+                
                 <!-- Add any relevant images here -->
                 <img src="graphr.png" alt="">
                 <!-- Link to more information -->
