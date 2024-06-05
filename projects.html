@@ -68,9 +68,9 @@
             <h2>Experiments: Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
             <ul>
                 <p>The idea here is to take images and compress them into a discrete embedding space with a vector quantized variational autoencoder. The heuristic for this is that we need unsupervised cluster centers to 
-                    represent the underlying continuous space; these cluster center indices are essentially image tokens. The reason that this is necessary is that ideally we can use the same auto-regressive transformer architecture
-                    to accept and produce images by predicting the PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether this can be trained
-                    as a finetuning process. This comes with some difficulties that we will encounter, such as adding an additional feedforward layer that expands to the new vocabulary size which includes the text tokens and the image tokens (codebook).
+                    represent the underlying continuous space; these cluster center indices are image tokens. Ideally we can use the same auto-regressive transformer architecture as the original LM
+                    to accept and produce images by predicting the discrete PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether Early-Fusion can be trained
+                    as a finetuning process. This comes with some difficulties that we will encounter, such as adding an additional feedforward layer that expands to the new vocabulary size, which includes the text tokens and the image tokens (codebook).
                     
                 </p>
                 <small>Project Active</small>
@@ -101,6 +101,7 @@
                 <img src="Screen Shot 2024-04-27 at 12.09.27 AM.png" alt="">
                 <!-- Link to more information -->
                 <p>Github <a href="https://github.com/rishiiyer01/Thermal-PINO" style="font-family: 'Cutive Mono', monospace;">code available here</a>.</p>
+                <p><a href="THESIS_RISHABH_IYER.pdf" target="_blank">Paper</a></p>
             </ul>
         </div>
         <div class="project">
