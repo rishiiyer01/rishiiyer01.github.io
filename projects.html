@@ -70,7 +70,8 @@
                 <p>The idea here is to take images and compress them into a discrete embedding space with a vector quantized variational autoencoder. The heuristic for this is that we need unsupervised cluster centers to 
                     represent the underlying continuous space; these cluster center indices are image tokens. Ideally we can use the same auto-regressive transformer architecture as the original LM
                     to accept and produce images by predicting the discrete PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether Early-Fusion can be trained
-                    as a finetuning process. This comes with some difficulties that we will encounter, such as adding an additional feedforward layer that expands to the new vocabulary size, which includes the text tokens and the image tokens (codebook).
+                    as a finetuning process. Initially, our experiments will consist of stitching Meta's Chameleon Vq-Vae to llama-3.1 by expanding the embedding layer on input. We add an additional layer to the vector quantized embeddings in order to match
+                    the dimensions of Llama3.1. We use the LLaVA-CC3M-Pretrain-595K dataset for this fine-tuning experiment. Fine-tuning code available below:
                     
                 </p>
                 <small>Project Active</small>
