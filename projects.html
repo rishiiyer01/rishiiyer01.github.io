@@ -3,69 +3,78 @@
 
 <head>
     <title>Most Recent Personal Projects</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Open Sans', sans-serif; /* Changed to Open Sans for better readability */
-            background-color: #FFFFFF;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
             margin: 0;
             padding: 0;
-            color: #000000;
+            color: #E0E0E0;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 50px auto;
             padding: 20px;
         }
 
         .project {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            background-color: #1E1E1E;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
         .project img {
             max-width: 100%;
             margin-bottom: 15px;
+            border-radius: 5px;
         }
 
         .project h2 {
-            font-family: 'Cutive Mono', monospace; /* Kept headers in Cutive Mono */
-            font-size: 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
             margin-bottom: 10px;
-            color: #000000;
+            color: #FFFFFF;
         }
 
         .project p {
-            font-size: 16px; /* Slightly reduced font size for better readability */
-            line-height: 1.6; /* Added line height for better spacing */
+            font-size: 16px;
+            line-height: 1.6;
+            color: #CCCCCC;
         }
-        
+
         .more-button {
             display: block;
-            width: 100px;
-            margin: 20px auto;
-            padding: 10px;
+            width: 120px;
+            margin: 30px auto;
+            padding: 12px;
             text-align: center;
-            background-color: #000000;
+            background-color: #FF4500;
             color: #FFFFFF;
             text-decoration: none;
             border-radius: 5px;
-            font-family: 'Open Sans', sans-serif; /* Changed button font to match body text */
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
         .project small {
             display: inline-block;
-            background-color: #000000;
+            background-color: #FF6347;
             color: #FFFFFF;
-            padding: 3px 7px;
+            padding: 4px 8px;
             font-size: 14px;
             border-radius: 10px;
-            font-family: 'Cutive Mono', monospace;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 10px;
         }
 
         /* Style for links to maintain consistency */
         a {
-            color: #0066cc;
+            color: #FF6347;
             text-decoration: none;
         }
 
@@ -85,13 +94,12 @@
                     to accept and produce images by predicting the discrete PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether Early-Fusion can be trained
                     as a finetuning process. Initially, our experiments will consist of stitching Meta's Chameleon Vq-Vae to llama-3.1 by expanding the embedding layer on input. We add an additional layer to the vector quantized embeddings in order to match
                     the dimensions of Llama3.1. We use the LLaVA-CC3M-Pretrain-595K dataset for this fine-tuning experiment. Fine-tuning code available below:
-                    
                 </p>
                 <small>Project Active</small>
                 <!-- Add any relevant images here -->
-                <img src="Screenshot 2024-06-05 at 5.34.39PM.png" alt="">
+                <img src="Screenshot 2024-06-05 at 11.34.39PM.png" alt="">
                 <!-- Link to more information -->
-                <p>Github <a href="https://github.com/rishiiyer01/EarlyFusionMultimodalLMs" style="font-family: 'Cutive Mono', monospace;">code available here</a>.</p>
+                <p>Github <a href="https://github.com/rishiiyer01/EarlyFusionMultimodalLMs" style="font-family: 'Montserrat', sans-serif;">code available here</a>.</p>
             </ul>
         </div>
         <div class="project">
@@ -114,8 +122,8 @@
                 <!-- Add any relevant images here -->
                 <img src="Screen Shot 2024-04-27 at 12.09.27 AM.png" alt="">
                 <!-- Link to more information -->
-                <p>Github <a href="https://github.com/rishiiyer01/Thermal-PINO" style="font-family: 'Cutive Mono', monospace;">code available here</a>.</p>
-                <p>Paper<a href="THESIS_RISHABH_IYER.pdf" target="_blank">  available here</a></p>
+                <p>Github <a href="https://github.com/rishiiyer01/Thermal-PINO" style="font-family: 'Montserrat', sans-serif;">code available here</a>.</p>
+                <p>Paper<a href="THESIS_RISHABH_IYER.pdf" target="_blank"> available here</a></p>
             </ul>
         </div>
         <div class="project">
@@ -126,7 +134,7 @@
                 <!-- Add any relevant images here -->
                 <img src="graphr.png" alt="">
                 <!-- Link to more information -->
-                <p>For more information about this project, visit <a href="https://devpost.com/software/napkin-ymh5f4#updates" style="font-family: 'Cutive Mono', monospace;">our project page, github at bottom of devpost</a>.</p>
+                <p>For more information about this project, visit <a href="https://devpost.com/software/napkin-ymh5f4#updates" style="font-family: 'Montserrat', sans-serif;">our project page</a>, github at bottom of devpost.</p>
             </ul>
         </div>
         <div class="project">
@@ -134,7 +142,7 @@
             <ul>
                 <p>I cannot say too much here, but the bulk of my recent work at Atomic Industries was on deep graph neural networks and implementing methods on the graphs of part meshes for hierarchical learning. I employed various methods from discrete differential geometry and also my own personal algorithms for curvature and edge detection as additional features fed into the network as well. I think personally what is interesting is that graph neural networks do not require a fixed length input, and that they already have a relative positional embedding given by the adjacency matrix.</p>
                 <!-- Add any relevant images here -->
-                <img src="gnnimage.png" alt="3d part with edges highlighted">
+                <img src="gnnimage.png" alt="3D part with edges highlighted">
             </ul>
         </div>
         <div class="project">
@@ -163,5 +171,6 @@
 </body>
 
 </html>
+
 
 
