@@ -7,10 +7,10 @@
     <style>
         body {
             font-family: 'Cutive Mono', monospace;
-            background-color: #FFFFFF;
+            background-color: #121212;
             margin: 0;
             padding: 0;
-            color: #000000;
+            color: #e0e0e0;
         }
 
         .container {
@@ -24,19 +24,26 @@
 
         .project {
             position: relative;
+            overflow: hidden;
+            border-radius: 8px;
         }
 
         .project img {
             width: 100%;
             display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .project:hover img {
+            transform: scale(1.05);
         }
 
         .project-description {
             position: absolute;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #FFFFFF;
-            padding: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            padding: 10px;
             width: 100%;
             font-size: 14px;
             opacity: 0;
@@ -48,6 +55,8 @@
         }
     </style>
 </head>
+
+
 
 <body>
     <div class="container">
