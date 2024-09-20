@@ -5,101 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects</title>
     <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: "courier-std", monospace;
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #E0E0E0;
-            overflow: hidden;
-        }
-        #corner-simulation {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 150px;
-            opacity: 0.7;
+            background: url('diffuse.gif') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
         #corner-text {
             position: fixed;
             bottom: 10px;
-            left: 50px;
-            font-size: 12px;
-            color: #B0B0B0;
+            right: 50px;
+            font-size: 10px;
+            color: #ff3c00;
         }
         #tab {
-            font-family: 'Montserrat', sans-serif;
-            color: #FFFFFF;
-            background-color: #1E1E1E;
+            font-family: "courier-std", monospace;
+            color: #ffffff;
+            background-color: #000000;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            padding: 30px;
-            transition: all 0.3s ease;
+            width: 250px;
+            height: 250px;
+            padding: 20px;
         }
         #resume-button {
-            font-family: 'Roboto', sans-serif;
-            background-color: #FF4500;
+            font-family: "courier-std", monospace;
+            background-color: rgb(255, 68, 0);
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 12px 24px;
+            padding: 10px 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 18px;
-            margin: 6px 3px;
+            font-size: 16px;
+            margin: 4px 2px;
             cursor: pointer;
             position: fixed;
             bottom: 100px;
             left: 100px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
         #toggle-button {
-            background-color: #FFD700;
+            background-color: #fdd835;
             color: #000000;
             border: none;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             text-align: center;
-            line-height: 35px;
-            font-size: 22px;
+            line-height: 30px;
+            font-size: 20px;
             cursor: pointer;
             position: fixed;
             bottom: 10px;
             right: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
         #dashed-box {
             position: absolute;
             top: 40%;
             left: 80%;
             transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
-            border: 3px dashed #FFFFFF;
+            width: 250px;
+            height: 250px;
+            border: 3px dashed black;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            color: #FFFFFF;
-            opacity: 0.8;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
         }
         #info-banner {
-            background-color: #1E1E1E;
-            color: #E0E0E0;
-            font-family: 'Roboto', sans-serif;
+            background-color: black;
+            color: white;
+            font-family: "courier-std", monospace;
             white-space: nowrap;
             overflow: hidden;
             position: fixed;
@@ -107,16 +97,14 @@
             width: 100%;
             height: 50px;
             line-height: 50px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
         }
         #info-banner a, #info-banner a:visited {
-            color: #FF6347;
+            color: rgb(255, 66, 3);
             text-decoration: none;
             font-size: 16px;
         }
         #info-banner a:hover {
-            color: #FF4500;
+            color: #ff4401;
             text-decoration: underline;
             font-size: 18px;
         }
@@ -175,9 +163,6 @@
                 font-size: 6px;
                 right: 10px;
             }
-            #corner-simulation {
-                width: 100px;
-            }
         }
     </style>
 </head>
@@ -202,13 +187,11 @@
         </div>
     </div>
     <button id="toggle-button">-</button>
-    <div id="corner-text">2D diffusion simulation + noise, random initial condition</div>
-    <img src="diffuse.gif" alt="Diffusion Simulation" id="corner-simulation">
+    <div id="corner-text">2d diffusion simulation+noise, random initial condition</div>
     <script>
         const tab = document.getElementById("tab");
         const toggleButton = document.getElementById("toggle-button");
         const dashedBox = document.getElementById("dashed-box");
-        const cornerSimulation = document.getElementById("corner-simulation");
 
         let isDragging = false;
         let currentMousePosition;
