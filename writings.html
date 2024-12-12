@@ -104,9 +104,9 @@
         }
 
         .ticker {
-            display: inline-block;
+            display: inline-flex;
             white-space: nowrap;
-            animation: ticker 15s linear infinite;  /* Reduced from 30s to 15s for faster speed */
+            animation: ticker 10s linear infinite;  /* Reduced from 30s to 15s for faster speed */
         }
 
         .ticker:hover {
@@ -173,12 +173,13 @@
     <!-- Ticker at the bottom -->
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker-item">* we are all great latent searchers </div>
-            <div class="ticker-item">* control theory is heavily underrappreciated</div>
-            <div class="ticker-item">* remember to drink water today </div>
-            <div class="ticker-item">* serial experiments lain is very good </div>
-            <div class="ticker-item">* sol -che </div>
-            <!-- Add more quotes as needed -->
+            <div class="ticker-content"></div>
+                <span class="ticker-item">* we are all great latent searchers</span>
+                <span class="ticker-item">* control theory is heavily underrappreciated</span>
+                <span class="ticker-item">* remember to drink water today </span>
+                <span class="ticker-item">* serial experiments lain is very good </span>
+                <span class="ticker-item">* sol -che </span>
+            </div>
         </div>
     </div>
 </body>
