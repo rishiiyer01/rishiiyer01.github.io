@@ -97,62 +97,43 @@
             left: 0;
             width: 100%;
             background-color: #1e1e1e;
-            padding: 4px 0;  /* Slightly reduced padding */
+            padding: 4px 0;
             border-top: 1px solid #333;
             overflow: hidden;
             z-index: 999;
         }
 
         .ticker {
-            display: inline-block;
-            white-space: nowrap;
-            animation: ticker 5s linear infinite;  /* Reduced from 30s to 15s for faster speed */
+            display: flex;  /* Changed to flex */
+            width: fit-content;  /* Ensure it fits content */
+            animation: ticker 5s linear infinite;
         }
 
         .ticker:hover {
             animation-play-state: paused;
         }
 
+        .ticker-content {
+            display: flex;
+            white-space: nowrap;
+        }
+
         .ticker-item {
             display: inline-block;
-            padding: 0 2rem;
+            padding: 0 1rem;
             color: #d3d3d3;
-            font-family: "Courier New", monospace;  /* Explicit monospace font */
-            font-size: 10px;  /* Smaller font size */
+            font-family: "Courier New", monospace;
+            font-size: 10px;
         }
 
         @keyframes ticker {
             0% {
-                transform: translateX(-50vw);
-                visibility: visible;
-            }
-            99% {
-                transform : translateX(50vw);
-                visibility: hidden;
+                transform: translate3d(0, 0, 0);
             }
             100% {
-                transform: translateX(-50vw);
-                visibility: hidden;
+                transform: translate3d(-50%, 0, 0);
             }
         }
-        
-        @media (max-width: 767px) {
-            .container {
-                padding: 15px;
-                margin: 20px auto;
-            }
-            
-            .back-link {
-                position: relative;
-                display: block;
-                margin-bottom: 20px;
-            }
-            
-            .post-title {
-                font-size: 24px;
-            }
-        }
-        
     </style>
 </head>
 <body>
@@ -179,12 +160,14 @@
     <!-- Ticker at the bottom -->
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker-content"></div>
+            <div class="ticker-content">
                 <span class="ticker-item">* we are all great latent searchers</span>
                 <span class="ticker-item">* control theory is heavily underrappreciated</span>
                 <span class="ticker-item">* remember to drink water today </span>
                 <span class="ticker-item">* serial experiments lain is very good </span>
                 <span class="ticker-item">* sol -che </span>
+            </div>
+            <div class="ticker-content">
                 <span class="ticker-item">* we are all great latent searchers</span>
                 <span class="ticker-item">* control theory is heavily underrappreciated</span>
                 <span class="ticker-item">* remember to drink water today </span>
