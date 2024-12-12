@@ -137,7 +137,6 @@
         .ticker {
             display: inline-block;
             white-space: nowrap;
-            padding-left: 100%;
             animation: ticker 15s linear infinite;  /* Reduced from 30s to 15s for faster speed */
         }
 
@@ -155,10 +154,10 @@
 
         @keyframes ticker {
             0% {
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(-100%, 0, 0);
             }
             100% {
-                transform: translate3d(-100%, 0, 0);
+                transform: translate3d(0, 0, 0);
             }
         }
         
@@ -177,6 +176,9 @@
             .post-title {
                 font-size: 24px;
             }
+        }
+        .ticker-content {
+            display: flex;
         }
     </style>
 </head>
@@ -220,6 +222,15 @@
             <div class="ticker-item">* sol -che </div>
             <!-- Add more quotes as needed -->
         </div>
+        <div class="ticker"></div>
+            <div class="ticker-item">* we are all great latent searchers </div>
+            <div class="ticker-item">* control theory is heavily underrappreciated</div>
+            <div class="ticker-item">* remember to drink water today </div>
+            <div class="ticker-item">* serial experiments lain is very good </div>
+            <div class="ticker-item">* sol -che </div>
+            <!-- Add more quotes as needed -->
+        </div>
     </div>
+    
 </body>
 </html>
