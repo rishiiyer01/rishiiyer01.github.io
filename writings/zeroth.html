@@ -6,6 +6,7 @@
     <title>Post Title - Rishi Iyer</title>
     <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
     <style>
+        /* Original page styles */
         body {
             font-family: "courier-std", monospace;
             margin: 0;
@@ -41,7 +42,6 @@
             margin-bottom: 40px;
         }
         
-        /* Style for different text elements */
         h2 {
             color: #ffffff;
             margin-top: 40px;
@@ -58,7 +58,6 @@
             margin-bottom: 20px;
         }
         
-        /* Code block styling */
         pre {
             background-color: #1e1e1e;
             padding: 15px;
@@ -72,14 +71,12 @@
             font-size: 14px;
         }
         
-        /* Inline code styling */
         p code {
             background-color: #1e1e1e;
             padding: 2px 5px;
             border-radius: 3px;
         }
         
-        /* Image styling */
         img {
             max-width: 100%;
             height: auto;
@@ -87,7 +84,6 @@
             border-radius: 5px;
         }
         
-        /* Link styling */
         a {
             color: #4da6ff;
             text-decoration: none;
@@ -109,7 +105,6 @@
             text-decoration: underline;
         }
         
-        /* Blockquote styling */
         blockquote {
             border-left: 3px solid #4da6ff;
             margin: 20px 0;
@@ -117,7 +112,6 @@
             color: #a0a0a0;
         }
         
-        /* List styling */
         ul, ol {
             margin: 20px 0;
             padding-left: 20px;
@@ -125,6 +119,47 @@
         
         li {
             margin-bottom: 10px;
+        }
+        
+        /* Ticker styles */
+        .ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 8px 0;  /* Slightly reduced padding */
+            border-top: 1px solid #333;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: ticker 15s linear infinite;  /* Reduced from 30s to 15s for faster speed */
+        }
+
+        .ticker:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 2rem;
+            color: #d3d3d3;
+            font-family: "Courier New", monospace;  /* Explicit monospace font */
+            font-size: 14px;  /* Smaller font size */
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
         }
         
         @media (max-width: 767px) {
@@ -158,14 +193,10 @@
             </header>
             
             <div class="post-content">
-                <!-- Introduction -->
-                
-                
-                <!-- Main content sections -->
                 <h2>why</h2>
                 <p>I am generally a private person outside of my twitter, but some of my friends have convinced me to start writing online in medium-long form. <br>
                     <br>
-                    There are some great online writers of which I am not near; I am quite poor at decoding my inner thoughts from latents to prose. I know I am very good at describing complex thoughts to myself, but it is obvious I am still a poor writer. This is probably because writing to an audience is a considerate effort to bridge the audience to your position. Generally, I don’t really feel like doing this; I’d rather speak in my own codes and jargon.  <br>
+                    There are some great online writers of which I am not near; I am quite poor at decoding my inner thoughts from latents to prose. I know I am very good at describing complex thoughts to myself, but it is obvious I am still a poor writer. This is probably because writing to an audience is a considerate effort to bridge the audience to your position. Generally, I don't really feel like doing this; I'd rather speak in my own codes and jargon.  <br>
 
                     <br>
                     Mainly I'll be writing about machine learning, robotics, and computational physics. Occassionally I may write about things in aerospace I find interesting. Anyways, the main point of this page is to a. get better at writing and b. describe my internal representations of interesting science publicly.
@@ -175,14 +206,18 @@
                     Knowing how I am, it is extremely likely I edit/rewrite old posts over time. This website will hopefully breathe. <br>
                     
                     -rishi</p>
-                
-               
-
-                
-                
-                
             </div>
         </article>
+    </div>
+
+    <!-- Ticker at the bottom -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item"> we are all great latent searchers </div>
+            <div class="ticker-item"> serial experiments lain is very good </div>
+            <div class="ticker-item"> sol -che </div>
+            <!-- Add more quotes as needed -->
+        </div>
     </div>
 </body>
 </html>
