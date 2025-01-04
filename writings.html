@@ -90,50 +90,7 @@
                 margin-bottom: 20px;
             }
         }
-        /* Ticker styles */
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 4px 0;
-            border-top: 1px solid #333;
-            overflow: hidden;
-            z-index: 999;
-        }
-
-        .ticker {
-            display: flex;  /* Changed to flex */
-            width: fit-content;  /* Ensure it fits content */
-            animation: ticker 4s linear infinite;
-        }
-
-        .ticker:hover {
-            animation-play-state: paused;
-        }
-
-        .ticker-content {
-            display: flex;
-            white-space: nowrap;
-        }
-
-        .ticker-item {
-            display: inline-block;
-            padding: 0 1rem;
-            color: #d3d3d3;
-            font-family: "Courier New", monospace;
-            font-size: 10px;
-        }
-
-        @keyframes ticker {
-            0% {
-                transform: translate3d(0, 0, 0);
-            }
-            100% {
-                transform: translate3d(-50%, 0, 0);
-            }
-        }
+        
     </style>
 </head>
 <body>
@@ -157,26 +114,7 @@
         
     </div>
 
-    <!-- Ticker at the bottom -->
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <div class="ticker-content">
-                <span class="ticker-item">* I have a positive lyapunov exponent along some dimensions</span>
-                <span class="ticker-item">* remember to increase your lower variational bound</span>
-                <span class="ticker-item">* the world to me is understood through pdes </span>
-                <span class="ticker-item">* differentiability is a basic need </span>
-                <span class="ticker-item">* I am a fatalist, but in a positive way</span>
-                <span class="ticker-item">* sol -che </span>
-            </div>
-            <div class="ticker-content">
-                <span class="ticker-item">* I have a positive lyapunov exponent along some dimensions</span>
-                <span class="ticker-item">* remember to increase your lower variational bound</span>
-                <span class="ticker-item">* the world to me is understood through pdes </span>
-                <span class="ticker-item">* differentiability is a basic need </span>
-                <span class="ticker-item">* I am a fatalist, but in a positive way</span>
-                <span class="ticker-item">* sol -che </span>
-            </div>
-        </div>
-    </div>
+    
+    
 </body>
 </html>
