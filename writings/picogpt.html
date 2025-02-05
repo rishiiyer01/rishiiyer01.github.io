@@ -200,7 +200,7 @@
                 <a href="/writings" class="back-link">← Back to writings</a>
                 
                 <header class="post-header">
-                    <h1>PicoGPT</h1>
+                    <h1>PicoGPT (Part 1/n)</h1>
                     <div class="post-meta">
                         *10 min read
                     </div>
@@ -220,11 +220,27 @@
                     Flex Attention <br>
                     Relu**2 <br>
                     RoPE <br>
-                    feed forward moes with expert parallelism (experiment 2) <br>
+                    feed forward MoEs with expert parallelism (experiment 2) <br>
+
+                    I'll probably do many more experiments on this repo, the design space is huge. I often think about: [SSMs, hybrid models, parameter sharing], which readily fit into model experiments at this size. <br>
+                    Things I did not include from NanoGPT:<br>
+                    <br>
+                    tanh logit soft capping (gemma)<br>
+                    long short sliding window attention (gemma)<br>
+                    QK norm<br>
+                    encoder/decoder u-net architecture (nanoGPT)<br>
+                    Muon optimizer<br>
+                    Window warmup (it was found by NanoGPT that slowly increasing context length during training to max sped up training, intuitively I buy this, but didn’t include it)<br>
+                    The initial architecture is slightly more sample efficient than gpt2 on 5B tokens of fineweb (did not do a full fineweb10B token run). It has a lot of room for growth of course.
                     </p>
                     
-                    <h2>Another Section</h2>
-                    <p>More content here...</p>
+                    <h2>Initial Hypothesis</h2>
+                    <p>
+                        My initial idea was as follows. Multi latent attention is really interesting because of the parameter savings from low rank projections, as well as the inference compute savings of caching a low rank RoPE key tensor and a low rank joint kv embedding. I wanted to run some experiments to loosely benchmark the capabilities of this architectural change and see if I could potentially improve upon it at a smaller scale. <br>
+                    Pretty much every other company to my knowledge was using context parallel instead of being able to run only data parallel for attention computation. Deepseek was already paying the cost of having many MoE’s with expert parallel. Potentially due to the low-rank nature of the key and value projections, it might be worthwhile to add MoE’s for added expressivity here.
+                    
+                    
+                    </p>
 
                     <!-- Example code block -->
                     <pre><code>function example() {
