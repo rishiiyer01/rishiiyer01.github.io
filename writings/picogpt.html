@@ -245,11 +245,12 @@
                     <p>
                         There is the obvious work in Deepseek-V3 and Deepseek-V2 which you should read immediately. In those works they describe MLA, it’s really not a complicated architectural intervention, but it works. It’s probably important to read some of the other work with low rank attention such as Grouped Query Attention. In GQA they do a similar low rank projection such that they share key and value heads for multiple query heads. This is not as performant as MLA which suggests some interesting theories with regards to how attention works. <br>
                         I initially actually got this idea from reading the MoEUT paper, as well as the Switch-Head paper, since they got somewhat good results from adding MoE’s to value and output projections. Their paper found that messing with the inner product by adding MoEs is problematic.
-
+                        
                     </p>
 
                     <!-- Example code block -->
-                    <pre><code>class MultiLatentAttention(nn.Module):
+                    <pre><code>
+                    class MultiLatentAttention(nn.Module):
                         def __init__(self,hidden_dim,num_heads=12,low_rank=2,block_size=128,max_seq_len=1024):
                             super().__init__()
                             self.num_heads=num_heads
