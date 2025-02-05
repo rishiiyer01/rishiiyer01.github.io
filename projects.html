@@ -78,7 +78,28 @@
 
 <body>
     <div class="container">
-        
+        <div class="project"></div>
+            <h2>PicoGPT</h2>
+            <ul>
+                <p>I made PicoGPT as a way to do small experiments on gpt2 small sized architectures. Primarily this comes from experience; even top labs tend to do a lot of 1 8xH100 node experiments before scaling.
+                    It is loosely based on the NanoGPT speedrun repository, but I removed some features I think would not scale well, as the purpose of PicoGPT was not speedrunning, but instead doing experiments to form theories on how to make better models at larger scales. 
+                    This is not to say that certain architectural changes NanoGPT made won’t scale, but moreso that I didn’t have evidence of scaling, so I decided to keep the experimental repository simple. 
+                    Also, if I were speedrunning, then that severely limits the types of experiments in the design space (for example, MoEs are out of the question for speedrunning due to communication overhead (2 gathers, scatter)). 
+                    The initial PicoGPT experiments include:
+
+                    Multi-latent Attention
+                    Flex Attention
+                    Relu**2
+                    RoPE
+                    feed forward moes with expert parallelism (experiment 2)
+                </p>
+                <small>Project Active</small>
+                <!-- Add any relevant images here -->
+                <img src="Screenshot 2025-02-05 at 10.07.07 AM.png" alt="">
+                <!-- Link to more information -->
+                <p><a href="https://github.com/rishiiyer01/picoGPT" style="font-family: 'Cutive Mono', monospace;">Github</a>.</p>
+            </ul>
+        </div>
         <div class="project">
             <h2>Experiments: Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
             <ul>
