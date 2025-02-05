@@ -112,56 +112,43 @@
             margin: 1.5rem 0;
         }
 
-        code {
-            font-family: "courier-std", monospace;
-            font-size: 0.9em;
-        }
-
-        p code {
-            background-color: #f5f5f5;
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-        }
         .code-block {
             position: relative;
+            width: 60rem; /* Significantly wider than content */
+            left: 50%;
+            transform: translateX(-50%);
             margin: 1.5rem 0;
+            font-size: 0.9em;
         }
 
         .code-preview {
             background-color: #f5f5f5;
             padding: 1rem;
-            border-radius: 4px;
+            border-radius: 4px 4px 0 0;
             cursor: pointer;
             border: 1px solid #eee;
+            white-space: pre;
         }
 
         .code-full {
             display: none;
             background-color: #f5f5f5;
             padding: 1rem;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-            white-space: pre-wrap;       /* Preserve whitespace and wrap */
-            word-wrap: break-word;       /* Break long words */
+            border-radius: 0 0 4px 4px;
             border: 1px solid #eee;
-        }
-
-        .code-block.expanded .code-preview {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+            border-top: none;
+            white-space: pre;
         }
 
         .code-block.expanded .code-full {
             display: block;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
         }
 
         .code-preview::after {
             content: "▼";
             position: absolute;
             right: 1rem;
-            font-size: 0.8em;
+            top: 1rem;
             color: #666;
         }
 
@@ -171,7 +158,26 @@
 
         code {
             font-family: "courier-std", monospace;
-            font-size: 0.9em;
+            tab-size: 4;
+            -moz-tab-size: 4;
+            display: block;
+        }
+
+        /* Keep inline code styling */
+        p code {
+            background-color: #f5f5f5;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            white-space: normal;
+            display: inline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 65rem) {
+            .code-block {
+                width: calc(100vw - 2rem);
+                font-size: 0.85em;
+            }
         }
 
         /* Links */
