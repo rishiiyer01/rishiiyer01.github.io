@@ -120,6 +120,57 @@
             padding: 0.2em 0.4em;
             border-radius: 3px;
         }
+        .code-block {
+            position: relative;
+            margin: 1.5rem 0;
+        }
+
+        .code-preview {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid #eee;
+        }
+
+        .code-full {
+            display: none;
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            white-space: pre-wrap;       /* Preserve whitespace and wrap */
+            word-wrap: break-word;       /* Break long words */
+            border: 1px solid #eee;
+        }
+
+        .code-block.expanded .code-preview {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .code-block.expanded .code-full {
+            display: block;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .code-preview::after {
+            content: "▼";
+            position: absolute;
+            right: 1rem;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .code-block.expanded .code-preview::after {
+            content: "▲";
+        }
+
+        code {
+            font-family: "courier-std", monospace;
+            font-size: 0.9em;
+        }
 
         /* Links */
         a {
@@ -183,6 +234,37 @@
             }
         }
     </style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Convert existing code blocks to the new format
+        document.querySelectorAll('pre').forEach(function(preElement) {
+            const codeBlock = document.createElement('div');
+            codeBlock.className = 'code-block';
+            
+            const codeContent = preElement.textContent;
+            const firstLine = codeContent.split('\n')[0];
+            
+            const preview = document.createElement('div');
+            preview.className = 'code-preview';
+            preview.innerHTML = `<code>${firstLine.trim()}</code>`;
+            
+            const fullCode = document.createElement('div');
+            fullCode.className = 'code-full';
+            fullCode.innerHTML = `<code>${codeContent}</code>`;
+            
+            codeBlock.appendChild(preview);
+            codeBlock.appendChild(fullCode);
+            
+            codeBlock.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+            
+            preElement.replaceWith(codeBlock);
+        });
+    });
+</script>
 </head>
 <body>
     <div class="container">
@@ -244,10 +326,14 @@
                     <h2>Background/Relevant Papers</h2>
                     <p>
                         There is the obvious work in Deepseek-V3 and Deepseek-V2 which you should read immediately. In those works they describe MLA, it’s really not a complicated architectural intervention, but it works. It’s probably important to read some of the other work with low rank attention such as Grouped Query Attention. In GQA they do a similar low rank projection such that they share key and value heads for multiple query heads. This is not as performant as MLA which suggests some interesting theories with regards to how attention works. <br>
-                        I initially actually got this idea from reading the MoEUT paper, as well as the Switch-Head paper, since they got somewhat good results from adding MoE’s to value and output projections. Their paper found that messing with the inner product by adding MoEs is problematic.
+                        I initially got the idea to add MoEs to the attention block from reading the MoEUT paper, as well as the Switch-Head paper, since they got somewhat good results from adding MoEs to value and output projections. Their paper found that messing with the inner product by adding MoEs to query and key projections is problematic.  
                         
                     </p>
+                    <h2>Multi Latent Attention Implementation</h2>
+                    <p>
+                        Of course, from Deepseek-v2/v3 I had to dramatically scale down the MLA implementation. There is a large design space here as well, and I highly doubt I found the optimal configuration given my compute budget. 
 
+                    </p>
                     <!-- Example code block -->
                     <pre><code>
                     class MultiLatentAttention(nn.Module):
