@@ -1,197 +1,288 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Most Recent Personal Projects</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - rishi</title>
+    <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
     <style>
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #121212;
+            font-family: "courier-std", monospace;
             margin: 0;
             padding: 0;
-            color: #bdbdbd; /* Lighter gray text color */
+            background-color: #fff;
+            color: #111;
+            line-height: 1.6;
+            font-size: 16px;
         }
 
         .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
+            max-width: 42rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
 
+        h1, h2, h3, .serif {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            line-height: 1.3;
+            color: #000;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        p {
+            margin: 0 0 1.5rem;
+        }
+
+        /* Header and Navigation */
+        header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 3rem;
+            padding: 1rem 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #111;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #111;
+        }
+
+        /* Project Styling */
         .project {
-            margin-bottom: 50px;
-            /* Removed background-color and padding */
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .project:last-child {
+            border-bottom: none;
+        }
+
+        .project-meta {
+            font-size: 0.875rem;
+            color: #666;
+            margin: 0.5rem 0;
         }
 
         .project img {
             max-width: 100%;
-            margin-bottom: 15px;
+            height: auto;
+            margin: 2rem 0;
             border-radius: 4px;
         }
 
-        .project h2 {
-            font-family: 'Cutive Mono', monospace;
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .project p {
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        
-        .more-button {
-            display: block;
-            width: 100px;
-            margin: 20px auto;
-            padding: 10px;
-            text-align: center;
-            background-color: #333333;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .project small {
-            display: inline-block;
-            background-color: #333333;
-            color: #ffffff;
-            padding: 3px 7px;
-            font-size: 14px;
-            border-radius: 10px;
-            font-family: 'Cutive Mono', monospace;
-        }
-
+        /* Links */
         a {
-            color: #4da6ff;
-            text-decoration: none;
+            color: #111;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.2em;
         }
 
         a:hover {
-            text-decoration: underline;
+            color: #444;
+        }
+
+        /* Status Tag */
+        .status-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border: 1px solid #111;
+            border-radius: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                font-size: 15px;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <div class="project">
-            <h2>PicoGPT</h2>
-            <ul>
-                <p>I made PicoGPT as a way to do small experiments on gpt2 small sized architectures. Primarily this comes from experience; even top labs tend to do a lot of 1 8xH100 node experiments before scaling.
-                    It is loosely based on the NanoGPT speedrun repository, but I removed some features I think would not scale well, as the purpose of PicoGPT was not speedrunning, but instead doing experiments to form theories on how to make better models at larger scales. 
-                    This is not to say that certain architectural changes NanoGPT made won’t scale, but moreso that I didn’t have evidence of scaling, so I decided to keep the experimental repository simple. 
-                    Also, if I were speedrunning, then that severely limits the types of experiments in the design space (for example, MoEs are out of the question for speedrunning due to communication overhead (2 gathers, scatter)). <br>
-                    The initial PicoGPT experiments include: <br>
-                    <br>
+        <header>
+            <nav class="nav">
+                <a href="/" class="nav-title">rishi</a>
+                <div class="nav-links">
+                    <a href="/projects">Projects</a>
+                </div>
+            </nav>
+        </header>
 
-                    Multi-latent Attention <br>
-                    Flex Attention <br>
-                    Relu**2 <br>
-                    RoPE <br>
-                    feed forward moes with expert parallelism (experiment 2) <br>
-                </p>
-                <small>Project Active</small>
-                <!-- Add any relevant images here -->
-                <img src="Screenshot 2025-02-05 at 10.07.07 AM.png" alt="">
-                <!-- Link to more information -->
-                <p><a href="https://rishiiyer.com/writings/picogpt.html" style="font-family: 'Cutive Mono', monospace;">Blogpost</a></p>
-                <p><a href="https://github.com/rishiiyer01/picoGPT" style="font-family: 'Cutive Mono', monospace;">Github</a></p>
-            </ul>
-        </div>
-        <div class="project">
-            <h2>Experiments: Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
-            <ul>
-                <p>The idea here is to take images and compress them into a discrete embedding space with a vector quantized variational autoencoder. The heuristic for this is that we need unsupervised cluster centers to 
-                    represent the underlying continuous space; these cluster center indices are image tokens. Ideally we can use the same auto-regressive transformer architecture as the original LM
-                    to accept and produce images by predicting the discrete PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether Early-Fusion can be trained
-                    as a finetuning process. Initially, our experiments will consist of stitching Meta's Chameleon Vq-Vae to llama-3.1 by expanding the embedding layer on input. We add an additional layer to the vector quantized embeddings in order to match
-                    the dimensions of Llama3.1. We use the LLaVA-CC3M-Pretrain-595K dataset for this fine-tuning experiment. Fine-tuning code available below:
+        <main>
+            <h1>Projects</h1>
+
+            <div class="project">
+                <h2>PicoGPT</h2>
+                <ul>
+                    <p>I made PicoGPT as a way to do small experiments on gpt2 small sized architectures. Primarily this comes from experience; even top labs tend to do a lot of 1 8xH100 node experiments before scaling.
+                        It is loosely based on the NanoGPT speedrun repository, but I removed some features I think would not scale well, as the purpose of PicoGPT was not speedrunning, but instead doing experiments to form theories on how to make better models at larger scales. 
+                        This is not to say that certain architectural changes NanoGPT made won’t scale, but moreso that I didn’t have evidence of scaling, so I decided to keep the experimental repository simple. 
+                        Also, if I were speedrunning, then that severely limits the types of experiments in the design space (for example, MoEs are out of the question for speedrunning due to communication overhead (2 gathers, scatter)). <br>
+                        The initial PicoGPT experiments include: <br>
+                        <br>
+    
+                        Multi-latent Attention <br>
+                        Flex Attention <br>
+                        Relu**2 <br>
+                        RoPE <br>
+                        feed forward moes with expert parallelism (experiment 2) <br>
+                    </p>
+                    <small>Project Active</small>
+                    <!-- Add any relevant images here -->
+                    <img src="Screenshot 2025-02-05 at 10.07.07 AM.png" alt="">
+                    <!-- Link to more information -->
+                    <p><a href="https://rishiiyer.com/writings/picogpt.html" style="font-family: 'Cutive Mono', monospace;">Blogpost</a></p>
+                    <p><a href="https://github.com/rishiiyer01/picoGPT" style="font-family: 'Cutive Mono', monospace;">Github</a></p>
+                </ul>
+            </div>
+            <div class="project">
+                <h2>Experiments: Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
+                <ul>
+                    <p>The idea here is to take images and compress them into a discrete embedding space with a vector quantized variational autoencoder. The heuristic for this is that we need unsupervised cluster centers to 
+                        represent the underlying continuous space; these cluster center indices are image tokens. Ideally we can use the same auto-regressive transformer architecture as the original LM
+                        to accept and produce images by predicting the discrete PDF of the next token, whether it be image or text. I think this is a particularly clever and nice architecture, but it has yet to be discovered whether Early-Fusion can be trained
+                        as a finetuning process. Initially, our experiments will consist of stitching Meta's Chameleon Vq-Vae to llama-3.1 by expanding the embedding layer on input. We add an additional layer to the vector quantized embeddings in order to match
+                        the dimensions of Llama3.1. We use the LLaVA-CC3M-Pretrain-595K dataset for this fine-tuning experiment. Fine-tuning code available below:
+                        
+                    </p>
+                    <small>Project Active</small>
+                    <!-- Add any relevant images here -->
+                    <img src="Screenshot 2024-06-05 at 5.34.39PM.png" alt="">
+                    <!-- Link to more information -->
+                    <p><a href="https://github.com/rishiiyer01/EarlyFusionMultimodalLMs" style="font-family: 'Cutive Mono', monospace;">Github</a></p>
+                </ul>
+            </div>
+            <div class="project">
+                <h2>Application of Augmented Fourier Neural Operator Methods to Conjugate Heat Transfer Problems</h2>
+                <ul>
+                    <p>High fidelity numerical simulations of the Navier-Stokes Equations coupled with the Heat-Advection
+                        equation for various Conjugate Heat Transfer (CHT) problems has proven to be of high cost computationally. These numerical simulations prove crucial to many engineering applications from
+                        the electronics industry to gas turbine simulation to aid with design optimization. Recent efforts
+                        have been made to apply machine learning as a surrogate model for such applications using various
+                        methods such as Variational Auto-Encoders (VAEs) or Physics Informed Neural Networks (PINNs),
+                        which require fixed-size inputs and only learn a single instance of a partial differential equation (PDE).
+                        The Fourier Neural Operator is a relatively new architecture which utilizes fast-fourier-transform
+                        compression to map between continuous function spaces, which allows for a mesh-independent
+                        architecture. We apply this to conjugate heat transfer problems by providing additional features
+                        as input, including a domain mask, and a masked loss function, which allows the model to render
+                        multi-physics, multi-domain problems with a single input. In less that 10 ms, and with an accuracy of
+                        0.992 on the test set, this modified Fourier Neural Operator should be a crutch for future repeatable
+                        conjugate heat transfer simulations in engineering.</p>
+                    <small>Thesis</small>
+                    <!-- Add any relevant images here -->
+                    <img src="Screen Shot 2024-04-27 at 12.09.27 AM.png" alt="">
+                    <!-- Link to more information -->
+                    <p><a href="https://github.com/rishiiyer01/Thermal-PINO" style="font-family: 'Cutive Mono', monospace;">Github</a></p>
+                    <p><a href="THESIS_RISHABH_IYER.pdf" target="_blank">  Paper</a></p>
+                </ul>
+            </div>
+            <div class="project">
+                <h2>Graph Retrieval Augmented Generation for Complex Python Codebases</h2>
+                <ul>
+                    <p>We won HackAtBrown2024 for best devtool with a near-complete implementation of Graph RAG on codebases. Here, we generate a knowledge graph of a python codebase using a custom parser on python abstract syntax trees. Then we embed the nodes (or chunks) using codebert, a model that is trained on both code and natural language. We store this data and compute a cosine similarity between our prompt (embedded in the same codebert) and our database embedding, which will return the most similar chunk. We can then concatenate this with our original prompt and feed it to a small llm like llama-7b or Mistral-7b. Additional performance can be gained by utilizing fine-tuning on the embeddings and the llm itself using synthetic question-answer, query-retrieval pairs from gpt4.</p>
                     
-                </p>
-                <small>Project Active</small>
-                <!-- Add any relevant images here -->
-                <img src="Screenshot 2024-06-05 at 5.34.39PM.png" alt="">
-                <!-- Link to more information -->
-                <p><a href="https://github.com/rishiiyer01/EarlyFusionMultimodalLMs" style="font-family: 'Cutive Mono', monospace;">Github</a></p>
-            </ul>
+                    <!-- Add any relevant images here -->
+                    <img src="graphr.png" alt="">
+                    <!-- Link to more information -->
+                    <p> <a href="https://devpost.com/software/napkin-ymh5f4#updates" style="font-family: 'Cutive Mono', monospace;">devpost</a>.</p>
+                </ul>
+            </div>
+            <div class="project">
+                <h2>Graph Neural Network Research</h2>
+                <ul>
+                    <p>I cannot say too much here, but the bulk of my recent work at Atomic Industries was on deep graph neural networks and implementing methods on the graphs of part meshes for hierarchical learning. I employed various methods from discrete differential geometry and also my own personal algorithms for curvature and edge detection as additional features fed into the network as well. I think personally what is interesting is that graph neural networks do not require a fixed length input, and that they already have a relative positional embedding given by the adjacency matrix.</p>
+                    <!-- Add any relevant images here -->
+                    <img src="gnnimage.png" alt="3d part with edges highlighted">
+                </ul>
+            </div>
+            <div class="project">
+                <h2>Thrust Vectoring Solid Rocket Motor with Optimal Control</h2>
+                <ul>
+                    <p>This project was a research capstone from my final year of mechanical engineering undergrad, where we set out to control a solid rocket motor with a gimbal. Generally speaking, this is quite easy for larger rockets
+                        with liquid engines, since the rockets are heavier and have less thrust instability. This is why videos of thrust vector gimbals are often much slower and less entertaining. Here, we used optimal control with a linear quadratic regulator,
+                        and the model was "trained" on the linear time invariant approximation to the aerodynamic differential equation in 2 dimensions (pitch and yaw). The experiment consisted of the same differential equation, but expressed as an inverted pendulum, which can actually
+                        be proven to have the same dynamics (since damping is often small on rockets). A kalman filter was used prior to the the linear quadratic regulator to try to weight the open loop model with gyro sensor feedback to aid accuracy and cancel sensor noise covariance cross terms. Mathematically this was a highly interesting problem, and certainly the engineering design was fulfilling.</p>
+                    <img src="rocket.gif" alt="Thrust Vector Gimbal Test">
+                    <img src="rocket2.gif" alt="Thrust Vector Gimbal Test">
+                </ul>
+            </div>
+            <div class="project">
+                <h2>Physics Informed Neural Network to Solve the 1-D Burgers Equation</h2>
+                <ul>
+                    <p>This is 1 dimensional burgers equation solution shown before and after training that was solved in PyTorch as a physics informed neural network. 
+                        The way it works is that given the inputs to a PDE (x,t), the backpropagation allows the network to learn the solution u(x,t) to the PDE based on the conservation constraint given by the physics informed loss (usually just the PDE expressed as a homogenous equation), alongside the data driven loss. 
+                        This problem only accepts fixed grids, which is an artifact of using a neural network. Currently I am working on methods such as physics informed neural operators which allow grids of any size within a margin by using the fourier transform. Other methods to deal with mesh-like inputs that have any tensor length are common in graph neural networks, which I have researched considerably at Atomic Industries. Top image represents domain initialization, bottom is after learning the PDE. </p>
+                    <img src="burg1.png" alt="Initialization of the domain">
+                    <img src="burg2.png" alt="Domain after learning the Burgers Equation">
+                </ul>
+            </div>
+
+            
+
+        </main>
+        <div class="more-container"></div>
+            <a href="projects2.html" class="more-button">More</a>
         </div>
-        <div class="project">
-            <h2>Application of Augmented Fourier Neural Operator Methods to Conjugate Heat Transfer Problems</h2>
-            <ul>
-                <p>High fidelity numerical simulations of the Navier-Stokes Equations coupled with the Heat-Advection
-                    equation for various Conjugate Heat Transfer (CHT) problems has proven to be of high cost computationally. These numerical simulations prove crucial to many engineering applications from
-                    the electronics industry to gas turbine simulation to aid with design optimization. Recent efforts
-                    have been made to apply machine learning as a surrogate model for such applications using various
-                    methods such as Variational Auto-Encoders (VAEs) or Physics Informed Neural Networks (PINNs),
-                    which require fixed-size inputs and only learn a single instance of a partial differential equation (PDE).
-                    The Fourier Neural Operator is a relatively new architecture which utilizes fast-fourier-transform
-                    compression to map between continuous function spaces, which allows for a mesh-independent
-                    architecture. We apply this to conjugate heat transfer problems by providing additional features
-                    as input, including a domain mask, and a masked loss function, which allows the model to render
-                    multi-physics, multi-domain problems with a single input. In less that 10 ms, and with an accuracy of
-                    0.992 on the test set, this modified Fourier Neural Operator should be a crutch for future repeatable
-                    conjugate heat transfer simulations in engineering.</p>
-                <small>Thesis</small>
-                <!-- Add any relevant images here -->
-                <img src="Screen Shot 2024-04-27 at 12.09.27 AM.png" alt="">
-                <!-- Link to more information -->
-                <p><a href="https://github.com/rishiiyer01/Thermal-PINO" style="font-family: 'Cutive Mono', monospace;">Github</a></p>
-                <p><a href="THESIS_RISHABH_IYER.pdf" target="_blank">  Paper</a></p>
-            </ul>
-        </div>
-        <div class="project">
-            <h2>Graph Retrieval Augmented Generation for Complex Python Codebases</h2>
-            <ul>
-                <p>We won HackAtBrown2024 for best devtool with a near-complete implementation of Graph RAG on codebases. Here, we generate a knowledge graph of a python codebase using a custom parser on python abstract syntax trees. Then we embed the nodes (or chunks) using codebert, a model that is trained on both code and natural language. We store this data and compute a cosine similarity between our prompt (embedded in the same codebert) and our database embedding, which will return the most similar chunk. We can then concatenate this with our original prompt and feed it to a small llm like llama-7b or Mistral-7b. Additional performance can be gained by utilizing fine-tuning on the embeddings and the llm itself using synthetic question-answer, query-retrieval pairs from gpt4.</p>
-                
-                <!-- Add any relevant images here -->
-                <img src="graphr.png" alt="">
-                <!-- Link to more information -->
-                <p> <a href="https://devpost.com/software/napkin-ymh5f4#updates" style="font-family: 'Cutive Mono', monospace;">devpost</a>.</p>
-            </ul>
-        </div>
-        <div class="project">
-            <h2>Graph Neural Network Research</h2>
-            <ul>
-                <p>I cannot say too much here, but the bulk of my recent work at Atomic Industries was on deep graph neural networks and implementing methods on the graphs of part meshes for hierarchical learning. I employed various methods from discrete differential geometry and also my own personal algorithms for curvature and edge detection as additional features fed into the network as well. I think personally what is interesting is that graph neural networks do not require a fixed length input, and that they already have a relative positional embedding given by the adjacency matrix.</p>
-                <!-- Add any relevant images here -->
-                <img src="gnnimage.png" alt="3d part with edges highlighted">
-            </ul>
-        </div>
-        <div class="project">
-            <h2>Thrust Vectoring Solid Rocket Motor with Optimal Control</h2>
-            <ul>
-                <p>This project was a research capstone from my final year of mechanical engineering undergrad, where we set out to control a solid rocket motor with a gimbal. Generally speaking, this is quite easy for larger rockets
-                    with liquid engines, since the rockets are heavier and have less thrust instability. This is why videos of thrust vector gimbals are often much slower and less entertaining. Here, we used optimal control with a linear quadratic regulator,
-                    and the model was "trained" on the linear time invariant approximation to the aerodynamic differential equation in 2 dimensions (pitch and yaw). The experiment consisted of the same differential equation, but expressed as an inverted pendulum, which can actually
-                    be proven to have the same dynamics (since damping is often small on rockets). A kalman filter was used prior to the the linear quadratic regulator to try to weight the open loop model with gyro sensor feedback to aid accuracy and cancel sensor noise covariance cross terms. Mathematically this was a highly interesting problem, and certainly the engineering design was fulfilling.</p>
-                <img src="rocket.gif" alt="Thrust Vector Gimbal Test">
-                <img src="rocket2.gif" alt="Thrust Vector Gimbal Test">
-            </ul>
-        </div>
-        <div class="project">
-            <h2>Physics Informed Neural Network to Solve the 1-D Burgers Equation</h2>
-            <ul>
-                <p>This is 1 dimensional burgers equation solution shown before and after training that was solved in PyTorch as a physics informed neural network. 
-                    The way it works is that given the inputs to a PDE (x,t), the backpropagation allows the network to learn the solution u(x,t) to the PDE based on the conservation constraint given by the physics informed loss (usually just the PDE expressed as a homogenous equation), alongside the data driven loss. 
-                    This problem only accepts fixed grids, which is an artifact of using a neural network. Currently I am working on methods such as physics informed neural operators which allow grids of any size within a margin by using the fourier transform. Other methods to deal with mesh-like inputs that have any tensor length are common in graph neural networks, which I have researched considerably at Atomic Industries. Top image represents domain initialization, bottom is after learning the PDE. </p>
-                <img src="burg1.png" alt="Initialization of the domain">
-                <img src="burg2.png" alt="Domain after learning the Burgers Equation">
-            </ul>
-        </div>
+        <footer>
+            <p>© 2025 rishi</p>
+        </footer>
     </div>
-    <a href="projects2.html" class="more-button">More</a>
 </body>
-
 </html>
-
-
-
-
-
-
-
