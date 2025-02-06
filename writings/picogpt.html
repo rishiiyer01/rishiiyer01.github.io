@@ -340,7 +340,15 @@
                     <h2>Multi Latent Attention Implementation</h2>
                     <p>
                         Of course, from Deepseek-v2/v3 I had to dramatically scale down the MLA implementation. There is a large design space here as well, and I highly doubt I found the optimal configuration given my compute budget. 
-
+                        <img src="/Screenshot 2025-02-05 at 10.07.07 AM.png 2025-02" alt="MLA">
+                        (see code example at bottom of page, or see github repo)
+                        Deepseek's implementation does several projections from the initial sequence of shape (B,S,7168). The query tensor is first projected down to a low rank latent of 1536 (Cq) before up-projected to 128*128 (num_heads*head_dim). 
+                        This part is completely without positional encodings (NoPE). Obviously they need positional encodings, but they realized they can share a small extremely RoPE(low rank tensor) across all heads. They project from the original sequence (B,S,7168)->(B,S,qr=64), then RoPE. 
+                        They repeat this across all heads and concatenate such that the head dimension of the inner product is (head_dim+qr). <br>
+                        For keys, the same RoPE technique is done (with the same dims as queries for inner product). For keys and values they do they same initial down projection from the orignal sequence, but they not only parameter share, they share the activations as a joint embedding: x->kv_low_rank. This allows them to cache this single low rank tensor for both keys and values.
+                        The initial down projection is even lower rank than the queries as well, which saves parameters for training and caching for inference x->kv_low_rank: (B,S,512). They can up project from the 512 super low rank joint embedding space for the NoPE keys and value projections. If you do the napkin math it's like 100M params saved per block. <br>
+                        
+                        
                     </p>
                     <!-- Example code block -->
                     

@@ -173,7 +173,7 @@
                 <ul>
                     <p>I made PicoGPT as a way to do small experiments on gpt2 small sized architectures. Primarily this comes from experience; even top labs tend to do a lot of 1 8xH100 node experiments before scaling.
                         It is loosely based on the NanoGPT speedrun repository, but I removed some features I think would not scale well, as the purpose of PicoGPT was not speedrunning, but instead doing experiments to form theories on how to make better models at larger scales. 
-                        This is not to say that certain architectural changes NanoGPT made won’t scale, but moreso that I didn’t have evidence of scaling, so I decided to keep the experimental repository simple. 
+                        This is not to say that certain architectural changes NanoGPT made won’t scale, but moreso that I didn’t have evidence of scaling. I decided to keep the experimental repository simple. 
                         Also, if I were speedrunning, then that severely limits the types of experiments in the design space (for example, MoEs are out of the question for speedrunning due to communication overhead (2 gathers, scatter)). <br>
                         The initial PicoGPT experiments include: <br>
                         <br>
@@ -182,7 +182,7 @@
                         Flex Attention <br>
                         Relu**2 <br>
                         RoPE <br>
-                        feed forward moes with expert parallelism (experiment 2) <br>
+                        feed forward MoEs with expert parallelism (experiment 2) <br>
                     </p>
                     <small>Project Active</small>
                     <!-- Add any relevant images here -->
@@ -193,7 +193,7 @@
                 </ul>
             </div>
             <div class="project">
-                <h2>Experiments: Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
+                <h2>Finetuning Early-Fusion Multimodality in Text-Only Decoders</h2>
                 <ul>
                     <p>The idea here is to take images and compress them into a discrete embedding space with a vector quantized variational autoencoder. The heuristic for this is that we need unsupervised cluster centers to 
                         represent the underlying continuous space; these cluster center indices are image tokens. Ideally we can use the same auto-regressive transformer architecture as the original LM
@@ -202,7 +202,7 @@
                         the dimensions of Llama3.1. We use the LLaVA-CC3M-Pretrain-595K dataset for this fine-tuning experiment. Fine-tuning code available below:
                         
                     </p>
-                    <small>Project Active</small>
+                    
                     <!-- Add any relevant images here -->
                     <img src="Screenshot 2024-06-05 at 5.34.39PM.png" alt="">
                     <!-- Link to more information -->
