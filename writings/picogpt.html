@@ -337,7 +337,7 @@
                     
                     <h2>Initial Hypothesis</h2>
                     <p>
-                        My initial idea was as follows. Multi latent attention is really interesting because of the parameter savings from low rank projections, as well as the inference compute savings of caching a low rank RoPE key tensor and a low rank joint kv embedding. I wanted to run some experiments to loosely benchmark the capabilities of this architectural change and see if I could potentially improve upon it at a smaller scale. <br>
+                        My initial idea was as follows: Multi latent attention is really interesting because of the parameter savings from low rank projections, as well as the inference compute savings of caching a low rank RoPE key tensor and a low rank joint kv embedding. I wanted to run some experiments to loosely benchmark the capabilities of this architectural change and see if I could potentially improve upon it at a smaller scale. <br>
                     Pretty much every other company to my knowledge was using context parallel instead of being able to run only data parallel for attention computation. Deepseek was already paying the cost of having many MoE’s with expert parallel. Potentially due to the low-rank nature of the key and value projections, it might be worthwhile to add MoE’s for added expressivity here.
                     
                     
@@ -358,6 +358,12 @@
                         They repeat this across all heads and concatenate such that the head dimension of the inner product is (head_dim+qr). <br>
                         For keys, the same RoPE technique is done (with the same dims as the RoPE queries for the inner product). For keys and values they do the same initial down projection from the orignal sequence, but they not only parameter share, they share the activations as a joint embedding: x->kv_low_rank. This allows them to cache this single low rank tensor for both keys and values.
                         The initial down projection is even lower rank than the queries as well, which saves parameters for training and caching for inference x->kv_low_rank: (B,S,512). They can up project from the 512 super low rank joint embedding space for the NoPE keys and value projections. If you do the napkin math it's like 100M params saved per block. <br>
+                        <br>
+                        In my implementation I had to use a dramatically different scale. Because of compute, there are many combinations that I couldn't test, but I thought this to be a second order problem; I was happy to get some training runs in regardless.
+                        I use the same low rank dimension for both queries and keys down projecting from 768 (gpt2) to 384, then I up projected back up to the orignal 768 to be distributed amongst 12 heads. 
+                        I actually kept the shared RoPE embed_dim from deepseek of 64, which makes half of my attention inner product shared across heads. The only real difference that isn't scaled down perfectly from deepseek's implementation is the value up projection had to be double the original embedding dimension to work well with flex-attention.
+                        You can easily get around this by writing a custom kernel, but that would probably overcomplicate this project, and I didn't mind the boost in expressivity after attention is computed anyways.
+
                         
                         
                     </p>
