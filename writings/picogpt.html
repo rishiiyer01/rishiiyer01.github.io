@@ -340,7 +340,7 @@
                     <h2>Multi Latent Attention Implementation</h2>
                     <p>
                         Of course, from Deepseek-v2/v3 I had to dramatically scale down the MLA implementation. There is a large design space here as well, and I highly doubt I found the optimal configuration given my compute budget. 
-                        <img src="/Screenshot 2025-02-05 at 10.07.07 AM.png 2025-02" alt="MLA">
+                        <img src="Screenshot 2025-02-05 at 10.07.07 AM.png" alt="MLA">
                         (see code example at bottom of page, or see github repo)
                         Deepseek's implementation does several projections from the initial sequence of shape (B,S,7168). The query tensor is first projected down to a low rank latent of 1536 (Cq) before up-projected to 128*128 (num_heads*head_dim). 
                         This part is completely without positional encodings (NoPE). Obviously they need positional encodings, but they realized they can share a small extremely RoPE(low rank tensor) across all heads. They project from the original sequence (B,S,7168)->(B,S,qr=64), then RoPE. 
