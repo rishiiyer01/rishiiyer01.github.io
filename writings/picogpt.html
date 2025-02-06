@@ -391,6 +391,8 @@
                         Overall, I seem to have reverse engineered the reason that Switch-head is getting less implementations, and why Deepseek did not use MoEs everywhere when they could. 
                         I don't think this is as interesting as the implication of MLA. The idea that low-rank linear projections are sufficient enough to augment the input sequence for queries, keys and values in attention is extremely interesting.<br>
                         Perhaps the idea is that the lower dimensional hyper plane is not as important as splitting heads, which is likely why deepseek decided to up project to an even higher embedding dim. It's like giving fine-scale resolution to the low rank hyperplane. It's honestly amazing that it even works at gpt2 scale.
+                        <br>
+                        If I had more compute I would have run on more training tokens + evals, but I sadly ran out of budget. If you are willing to fund experiments of this size, please contact me.
                     </p>
 
                     </p>
