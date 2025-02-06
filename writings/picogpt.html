@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PicoGPT</title>
     <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Base styles */
         body {
-            font-family: "courier-std", monospace;
+            font-family: "IBM Plex Sans", -apple-system, system-ui, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #fff;
@@ -345,7 +346,7 @@
                         Deepseek's implementation does several projections from the initial sequence of shape (B,S,7168). The query tensor is first projected down to a low rank latent of 1536 (Cq) before up-projected to 128*128 (num_heads*head_dim). 
                         This part is completely without positional encodings (NoPE). Obviously they need positional encodings, but they realized they can share a small extremely RoPE(low rank tensor) across all heads. They project from the original sequence (B,S,7168)->(B,S,qr=64), then RoPE. 
                         They repeat this across all heads and concatenate such that the head dimension of the inner product is (head_dim+qr). <br>
-                        For keys, the same RoPE technique is done (with the same dims as queries for inner product). For keys and values they do they same initial down projection from the orignal sequence, but they not only parameter share, they share the activations as a joint embedding: x->kv_low_rank. This allows them to cache this single low rank tensor for both keys and values.
+                        For keys, the same RoPE technique is done (with the same dims as the RoPE queries for the inner product). For keys and values they do the same initial down projection from the orignal sequence, but they not only parameter share, they share the activations as a joint embedding: x->kv_low_rank. This allows them to cache this single low rank tensor for both keys and values.
                         The initial down projection is even lower rank than the queries as well, which saves parameters for training and caching for inference x->kv_low_rank: (B,S,512). They can up project from the 512 super low rank joint embedding space for the NoPE keys and value projections. If you do the napkin math it's like 100M params saved per block. <br>
                         
                         
