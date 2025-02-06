@@ -363,11 +363,37 @@
                         I use the same low rank dimension for both queries and keys down projecting from 768 (gpt2) to 384, then I up projected back up to the orignal 768 to be distributed amongst 12 heads. 
                         I actually kept the shared RoPE embed_dim from deepseek of 64, which makes half of my attention inner product shared across heads. The only real difference that isn't scaled down perfectly from deepseek's implementation is the value up projection had to be double the original embedding dimension to work well with flex-attention.
                         You can easily get around this by writing a custom kernel, but that would probably overcomplicate this project, and I didn't mind the boost in expressivity after attention is computed anyways.
-
-                        
-                        
                     </p>
-                    <!-- Example code block -->
+                    <h2>Experiments</h2>
+                    <p>
+                        The first experiment was a baseline gpt2 sized model with MLA replacing all MHA blocks. <br>
+                        Config:<br>
+                        768 dim embed, 12 layers, 12 heads <br>
+                        384 dim query and key low_rank <br>
+                        1536 value up projection <br>
+                        1024 sequence length (sliding window and document masking instead of padding for speed) <br>
+                        5B tokens of webtext <br>
+                        This resulted in:
+                        <img src="Screenshot 2025-02-05 at 12.35.12 AM.png" alt="val_loss">
+                        This is an improvement on naive gpt2 at 5B tokens trained, since GPT2 only makes it to about 3.4 val_loss at 5B tokens. It is not conclusive. However, to reduce the parameters and get increased sample efficiency shows that it is a reasonable direction.<br> 
+                        <br> 
+                        Now, with not very much compute budget remaining, I decided I had a decent enough baseline to test my MoE ideas. It seemed somewhat obvious. Low-rank projections reduce expressivity by bottlenecking information, if I add a load-balanced MoE to value and out projections it's free lunch.
+                        This ended up not being the case. You can try it yourself, but even with load-balancing the model is unable to learn effectively. It saturates quite early, within 2B tokens. <br>
+                        This could obviously be because of the sample efficiency problems of training MoEs, which makes my 5B token test an unfair comparison, but to saturate early with load-balancing is an indication of something theoretical. I think perhaps attention does not need more expressivity.
+                        The Switch-Head paper originally found that adding MoEs prior to the inner-product is deterimental, and the value, out projections are just linear projections. How much expressivity is there even to gain by using a linear MoE?
+                        <br>
+                        <br>
+                        If our only option is to modify the output of attention, and the MLPs come right after, we might as well just add the MoEs and gain back the expressivity there. This ends up being exactly what Deepseek does. 
+                        I still ran into sample-effiency issues with training an MoE on 5B tokens of text, but got no saturation and it seemed promising to beat out my MLA model after ~10B tokens of text. However, given my GPU poor status, I was not going to wait that long. If you have an H100 Node I implore you to try it out! The code is available as it's own model+train file. 
+
+                    <h2>Discussion</h2>
+                    <p>
+                        Overall, I seem to have reverse engineered the reason that Switch-head is getting less implementations, and why Deepseek did not use MoEs everywhere when they could. 
+                        I don't think this is as interesting as the implication of MLA. The idea that low-rank linear projections are sufficient enough to augment the input sequence for queries, keys and values in attention is extremely interesting.<br>
+                        Perhaps the idea is that the lower dimensional hyper plane is not as important as splitting heads, which is likely why deepseek decided to up project to an even higher embedding dim. It's like giving fine-scale resolution to the low rank hyperplane. It's honestly amazing that it even works at gpt2 scale.
+                    </p>
+
+                    </p>
                     
                     <pre><code> #MultiLatentAttention
 class MultiLatentAttention(nn.Module):
