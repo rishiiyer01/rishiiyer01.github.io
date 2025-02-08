@@ -318,10 +318,14 @@
                     <br>
 
                     Multi-latent Attention <br>
+                        -reduces parameter count, kv joint embedding, shared RoPE across heads, partial NoPE<br>
                     Flex Attention <br>
+                        -allows to treat multiple documents as a single sequence with document masking (no padding necessary), sliding window of context length, causal masking<br>
                     Relu**2 <br>
+                        -more sample efficient than GLU variants, even for larger models?<br>
                     RoPE <br>
                     feed forward MoEs with expert parallelism (experiment 2) <br>
+                        -increases expressivity for MLPs with limited inference cost
 
                     I'll probably do many more experiments on this repo, the design space is huge. I often think about: [SSMs, hybrid models, parameter sharing], which readily fit into model experiments at this size. <br>
                     Things I did not include from NanoGPT:<br>
