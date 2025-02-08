@@ -351,7 +351,7 @@
                     </p>
                     <h2>Background/Relevant Papers</h2>
                     <p>
-                        There is the obvious work in Deepseek-V3 and Deepseek-V2 which you should read immediately. In those works they describe MLA, it’s really not a complicated architectural intervention, but it works. It’s probably important to read some of the other work with low rank attention such as Grouped Query Attention. In GQA they do a similar low rank projection such that they share key and value heads for multiple query heads. This is not as performant as MLA which suggests some interesting theories with regards to how attention works. <br>
+                        There is the obvious work in Deepseek-V3 and Deepseek-V2 which you should read immediately. In those works they describe MLA; it’s really not a complicated architectural intervention, but it works. It’s probably important to read some of the other work with low rank attention such as Grouped Query Attention (Gemma, Qwen). In GQA they do a similar low rank projection such that they share key and value heads for multiple query heads. This is not as performant as MLA which suggests some interesting theories with regards to how attention works. <br>
                         I initially got the idea to add MoEs to the attention block from reading the MoEUT paper, as well as the Switch-Head paper, since they got somewhat good results from adding MoEs to value and output projections. Their paper found that messing with the inner product by adding MoEs to query and key projections is problematic.  
                         
                     </p>
