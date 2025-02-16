@@ -24,12 +24,7 @@
         }
 
                 /* Base container tweaks */
-        .container {
-            max-width: 42rem;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            position: relative; /* For positioning wider elements */
-        }
+        
 
         /* Typography */
         h1, h2, h3, .serif {
@@ -118,13 +113,16 @@
             margin: 1.5rem 0;
         }
 
+        .container {
+            max-width: 60rem;  /* Increased from 42rem */
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
         .code-block {
+            width: 100%;      /* Changed from fixed width */
             position: relative;
-            width: 60rem; /* Significantly wider than content */
-            left: 50%;
-            transform: translateX(-50%);
             margin: 1.5rem 0;
-            font-size: 0.9em;
         }
 
         .code-preview {
@@ -250,9 +248,10 @@
     </style>
 
 <script type="text/babel">
+    const { useState } = React;
     const NotionCodeBlock = ({ code = '', language = 'python' }) => {
-      const [isExpanded, setIsExpanded] = React.useState(false);
-      const [isCopied, setIsCopied] = React.useState(false);
+        const [isExpanded, setIsExpanded] = React.useState(false);
+        const [isCopied, setIsCopied] = React.useState(false);
     
       const codeStr = String(code || '');
       const lines = codeStr.trim().split('\n');
@@ -319,21 +318,20 @@
     };
     
     // Initialize code blocks
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('pre').forEach(function(preElement) {
-            const container = document.createElement('div');
-            const codeContent = preElement.textContent;
-            preElement.parentNode.replaceChild(container, preElement);
-            
-            ReactDOM.render(
-                <NotionCodeBlock 
-                    code={codeContent}
-                    language="python"
-                />,
-                container
-            );
-        });
+    
+    window.addEventListener('load', function() {
+    const preElements = document.querySelectorAll('pre');
+    preElements.forEach(preElement => {
+        const container = document.createElement('div');
+        preElement.parentNode.replaceChild(container, preElement);
+        
+        const codeContent = preElement.textContent;
+        ReactDOM.render(
+            <NotionCodeBlock code={codeContent} language="python" />,
+            container
+        );
     });
+});
     </script>
 
 </head>
