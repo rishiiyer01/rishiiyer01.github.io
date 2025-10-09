@@ -11,25 +11,25 @@
             font-family: "courier-std", monospace;
             margin: 0;
             padding: 0;
-            background-color: black; /* or any color you prefer for the main background */
-            color: #d3d3d3;
+            background-color: #faf8f5;
+            color: #2a2a2a;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            position: relative; /* Added for absolute positioning context */
+            position: relative;
         }
 
-        /* Add this new style for the simulation container */
         .simulation-container {
             position: fixed;
             bottom: 0;
             right: 0;
-            width: 300px;  /* Adjust size as needed */
-            height: 300px; /* Adjust size as needed */
+            width: 300px;
+            height: 300px;
             overflow: hidden;
-            z-index: -1;   /* Places it behind other content */
+            z-index: -1;
+            opacity: 0.6;
         }
 
         .simulation-container::after {
@@ -42,11 +42,25 @@
             background: url('diffuse2.gif') no-repeat center center;
             background-size: cover;
         }
+
+        /* ASCII art for SwiGLU with squared ReLU */
+        .ascii-art {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 9px;
+            color: #d4d0c8;
+            line-height: 1.2;
+            white-space: pre;
+            z-index: -1;
+            font-family: monospace;
+        }
         
         #content {
             text-align: center;
             max-width: 600px;
             width: 90%;
+            z-index: 1;
         }
         
         #links {
@@ -57,12 +71,53 @@
         }
         
         #links a {
-            color: #d3d3d3;
+            color: #2a2a2a;
             text-decoration: none;
             margin: 5px 0;
         }
         
         #links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Paper box styling */
+        .paper-box {
+            margin-top: 30px;
+            background-color: #f0ede6;
+            border: 1px solid #d4d0c8;
+            border-radius: 20px;
+            padding: 20px 30px;
+            display: inline-block;
+            max-width: 400px;
+        }
+
+        .paper-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            font-weight: normal;
+            color: #5a5a5a;
+        }
+
+        .paper-title {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #2a2a2a;
+        }
+
+        .paper-venue {
+            font-size: 11px;
+            color: #6a6a6a;
+            margin-bottom: 10px;
+        }
+
+        .paper-links a {
+            color: #2a2a2a;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 11px;
+        }
+
+        .paper-links a:hover {
             text-decoration: underline;
         }
         
@@ -71,20 +126,50 @@
             bottom: 10px;
             right: 10px;
             font-size: 10px;
-            color: #a9a9a9;
+            color: #8a8a8a;
         }
         
         @media (max-width: 767px) {
             #content {
                 font-size: 14px;
             }
+            .ascii-art {
+                display: none;
+            }
+            .paper-box {
+                max-width: 90%;
+                padding: 15px 20px;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div class="ascii-art">
+        in
+         |
+         |
+        / \
+       /   \
+      /     \
+   W(x)   V(x)
+     |      |
+     |      ↓
+     |    ReLU²
+     |      |
+      \     /
+       \   /
+        \ /
+         ⊗
+         |
+         ↓
+        out
+    </div>
+
     <div id="content">
-        <p><br> Researcher@zyphra, working on pretraining architectures <br> -Rishi
+        <p><br> researcher at zyphra <br> 
+            currently working on novel pretraining architectures and optimizers<br> 
+            -Rishi
             <br>
             <br>
             Feel free to email me, I am almost always interested in meeting new people.
@@ -93,10 +178,15 @@
         </p>
         <div id="links">
             <a href="mailto:rishiiiyer01@gmail.com">Email</a>
-            <a href="https://www.linkedin.com/in/rishi-iyer-1bbb151a3/" target="_blank">LinkedIn</a>
             <a href="https://twitter.com/rish11yer" target="_blank">Twitter</a>
-            
-            
+        </div>
+
+        <div class="paper-box">
+            <h3>recent work</h3>
+            <div class="paper-title">Compressed Convolutional Attention</div>
+            <div class="paper-links">
+                <a href="#">https://arxiv.org/abs/2510.04476</a>
+            </div>
         </div>
     </div>
     <div id="corner-text">2d diffusion simulation+noise, random initial condition</div>
