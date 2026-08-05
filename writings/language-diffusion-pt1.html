@@ -357,7 +357,7 @@
                     mixing flops and latency go. With these sorts of numbers it is practically impossible
                     to hit the ridge of the roofline with attention without significant diffusion or block
                     size inference, and thus it is important to start improving such methods in conjunction
-                    with sparse attention. It is far easier to scale flops than bandwidth, and thus we need
+                    with sparse attention. It is far easier to scale flops than bandwidth (classic volume vs surface area scaling), and thus we need
                     to make architecture choices accordingly.
                 </p>
 
@@ -367,7 +367,8 @@
                     would otherwise be unused. This doesn't actually change the throughput unless you have
                     good toks/NFE, which is an entirely separate post that I'll probably make on what
                     actually gets you to losslessly have high toks/NFE, since there are about 100 diff
-                    methods out there.
+                    methods out there. Also, real kernels have different arithmetic intensities than default matrix multiply instructions,
+                    so tuning to those arithmetic intensities (hopefully a large fraction of total) is necessary.
                 </p>
 
                 <h2>References</h2>
