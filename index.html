@@ -5,139 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rishi Iyer</title>
     <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: "courier-std", monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #faf8f5;
-            color: #2a2a2a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            position: relative;
+        .container {
+            padding-top: 90px;
         }
 
-        .simulation-container {
+        h1 {
+            font-size: 34px;
+            margin: 0 0 6px;
+        }
+
+        .role {
+            font-size: 17px;
+            color: var(--muted);
+            margin-bottom: 36px;
+        }
+
+        .bio {
+            margin-bottom: 36px;
+        }
+
+        nav.links {
+            font-size: 17px;
+            margin-bottom: 56px;
+        }
+
+        nav.links a {
+            margin-right: 24px;
+        }
+
+        .recent-work h2 {
+            font-size: 18px;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            margin: 0 0 20px;
+        }
+
+        .paper {
+            margin-bottom: 18px;
+        }
+
+        .paper a {
+            font-size: 17px;
+        }
+
+        .paper .arxiv-id {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--muted);
+            margin-left: 10px;
+        }
+
+        /* SwiGLU with squared ReLU, as ornament */
+        .ascii-art {
+            position: fixed;
+            top: 24px;
+            right: 32px;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: #d8cfba;
+            line-height: 1.25;
+            white-space: pre;
+            z-index: -1;
+            user-select: none;
+        }
+
+        .simulation {
             position: fixed;
             bottom: 0;
             right: 0;
-            width: 300px;
-            height: 300px;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .simulation-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            width: 220px;
+            height: 220px;
             background: url('diff4.gif') no-repeat center center;
             background-size: cover;
-        }
-
-        /* ASCII art for SwiGLU with squared ReLU */
-        .ascii-art {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 9px;
-            color: #d4d0c8;
-            line-height: 1.2;
-            white-space: pre;
+            opacity: 0.85;
             z-index: -1;
-            font-family: monospace;
-        }
-        
-        #content {
-            text-align: center;
-            max-width: 600px;
-            width: 90%;
-            z-index: 1;
-        }
-        
-        #links {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        #links a {
-            color: #2a2a2a;
-            text-decoration: none;
-            margin: 5px 0;
-        }
-        
-        #links a:hover {
-            text-decoration: underline;
         }
 
-        /* Paper box styling */
-        .paper-box {
-            margin-top: 30px;
-            background-color: #f0ede6;
-            border: 1px solid #d4d0c8;
-            border-radius: 20px;
-            padding: 20px 30px;
-            display: inline-block;
-            max-width: 400px;
-        }
-
-        .paper-box h3 {
-            margin: 0 0 10px 0;
-            font-size: 12px;
-            font-weight: normal;
-            color: #5a5a5a;
-        }
-
-        .paper-title {
-            font-size: 13px;
-            margin-bottom: 8px;
-            color: #2a2a2a;
-        }
-
-        .paper-venue {
-            font-size: 11px;
-            color: #6a6a6a;
-            margin-bottom: 10px;
-        }
-
-        .paper-links a {
-            color: #2a2a2a;
-            text-decoration: none;
-            margin-right: 15px;
-            font-size: 11px;
-        }
-
-        .paper-links a:hover {
-            text-decoration: underline;
-        }
-        
         #corner-text {
             position: fixed;
             bottom: 10px;
-            right: 10px;
-            font-size: 10px;
-            color: #8a8a8a;
+            left: 14px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
         }
-        
-        @media (max-width: 767px) {
-            #content {
-                font-size: 14px;
-            }
+
+        @media (max-width: 1000px) {
             .ascii-art {
                 display: none;
             }
-            .paper-box {
-                max-width: 90%;
-                padding: 15px 20px;
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                padding-top: 48px;
+            }
+            .simulation {
+                width: 140px;
+                height: 140px;
+                opacity: 0.5;
+            }
+            .paper .arxiv-id {
+                display: block;
+                margin-left: 0;
             }
         }
     </style>
@@ -145,60 +118,59 @@
 
 <body>
     <div class="ascii-art">
-        in
-         |
-         |
-        / \
-       /   \
-      /     \
-   W(x)   V(x)
-     |      |
-     |      ↓
-     |    ReLU²
-     |      |
-      \     /
-       \   /
-        \ /
-         ⊗
-         |
-         ↓
-        out
+      in
+       |
+       |
+      / \
+     /   \
+    /     \
+ W(x)   V(x)
+   |      |
+   |      ↓
+   |    ReLU²
+   |      |
+    \     /
+     \   /
+      \ /
+       ⊗
+       |
+       ↓
+      out
     </div>
 
-    <div id="content">
-        <p><br> researcher at zyphra <br> 
-            currently working on novel hardware aware pretraining architectures for low latency inference at scale, diffusion language models, sample efficient context extension, spectral clipping optimizers<br> 
-            -Rishi
-            <br>
-            <br>
-            Feel free to email me, I am almost always interested in meeting new people.
-            <br>
-           
-        </p>
-        <div id="links">
-            <a href="mailto:rishiiiyer01@gmail.com">Email</a>
-            <a href="https://twitter.com/rishiiyer01" target="_blank">Twitter</a>
+    <div class="container">
+        <h1>Rishi Iyer</h1>
+        <div class="role">researcher @ zyphra</div>
+
+        <div class="bio">
+            <p>Currently working on novel hardware-aware pretraining architectures
+            for low-latency inference at scale, diffusion language models,
+            sample-efficient context extension, and spectral clipping optimizers.</p>
+
+            <p>Feel free to email me — I am almost always interested in meeting new people.</p>
         </div>
 
-        <div class="paper-box">
-            <h3>recent work</h3>
-            <div class="paper-title">ZAYA1-8B Technical Report</div>
-            <div class="paper-links">
-                <a href="https://arxiv.org/abs/2605.05365v1">https://arxiv.org/abs/2605.05365v1</a>
+        <nav class="links">
+            <a href="writings.html">writings</a>
+            <a href="mailto:rishiiiyer01@gmail.com">email</a>
+            <a href="https://twitter.com/rishiiyer01" target="_blank">twitter</a>
+        </nav>
+
+        <div class="recent-work">
+            <h2>recent work</h2>
+            <div class="paper">
+                <a href="https://arxiv.org/abs/2605.05365v1">ZAYA1-8B Technical Report</a><span class="arxiv-id">arXiv:2605.05365</span>
             </div>
-            <br>
-            <div class="paper-title">Training Foundation Models on a Full-Stack AMD Platform</div>
-            <div class="paper-links">
-                <a href="https://arxiv.org/abs/2511.17127">https://arxiv.org/abs/2511.17127</a>
+            <div class="paper">
+                <a href="https://arxiv.org/abs/2511.17127">Training Foundation Models on a Full-Stack AMD Platform</a><span class="arxiv-id">arXiv:2511.17127</span>
             </div>
-            <br>
-            <div class="paper-title">Compressed Convolutional Attention</div>
-            <div class="paper-links">
-                <a href="https://arxiv.org/abs/2510.04476">https://arxiv.org/abs/2510.04476</a>
+            <div class="paper">
+                <a href="https://arxiv.org/abs/2510.04476">Compressed Convolutional Attention</a><span class="arxiv-id">arXiv:2510.04476</span>
             </div>
         </div>
     </div>
+
     <div id="corner-text">'_'</div>
-    <div class="simulation-container"></div>
+    <div class="simulation"></div>
 </body>
 </html>

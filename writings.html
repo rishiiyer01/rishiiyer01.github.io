@@ -5,121 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mostly Technical Writings</title>
     <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: "courier-std", monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #d3d3d3;
+        .page-title {
+            font-size: 24px;
+            margin: 0 0 40px;
         }
-        
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        
+
         .writing-entry {
             margin-bottom: 40px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 24px;
         }
-        
+
         .writing-entry:last-child {
             border-bottom: none;
         }
-        
+
         .writing-entry h2 {
-            color: #ffffff;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin: 0 0 8px;
         }
-        
-        .writing-entry .date {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 15px;
+
+        .writing-entry h2 a {
+            color: var(--heading);
         }
-        
+
         .writing-entry .preview {
-            margin-bottom: 15px;
+            margin: 0;
             line-height: 1.6;
         }
-        
-        .writing-entry a {
-            color: #4da6ff;
-            text-decoration: none;
+
+        .writing-entry .meta {
+            margin-bottom: 10px;
         }
-        
-        .writing-entry a:hover {
-            text-decoration: underline;
-        }
-        
-        .tag {
-            display: inline-block;
-            background-color: #333333;
-            color: #ffffff;
-            padding: 3px 7px;
-            font-size: 12px;
-            border-radius: 10px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-        
-        .back-link {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            color: #d3d3d3;
-            text-decoration: none;
-        }
-        
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 767px) {
-            .container {
-                padding: 15px;
-                margin: 20px auto;
-            }
-            
-            .back-link {
-                position: relative;
-                display: block;
-                margin-bottom: 20px;
-            }
-        }
-        
     </style>
 </head>
 <body>
     <a href="index.html" class="back-link">← back</a>
-    
+
     <div class="container">
+        <h1 class="page-title">mostly technical writings</h1>
+
         <div class="writing-entry">
-            <h2>PicoGPT</h2>
-            <div class="date">*10 min read</div>
-            <div class="tags">
-                <span class="tag">LLMs</span>
-            </div>
-            <p class="preview">
-                Initial GPT2 sized experiments with: <br>
-                Multi-latent Attention <br>
-                Flex Attention <br>
-                Relu**2 <br>
-                RoPE <br>
-                feed forward moes with expert parallelism (experiment 2) <br>
-            </p>
-            <a href="writings/picogpt.html">Read more →</a>
+            <h2><a href="writings/language-diffusion-pt1.html">language diffusion pt 1: arithmetic intensity primer</a></h2>
+            <div class="meta">diffusion</div>
+            <p class="preview">Deriving decode arithmetic intensity for GQA attention and MoE layers,
+            where they sit relative to the roofline ridge, and how block diffusion multiplies
+            both by the block size.</p>
         </div>
 
-        
-
-        
     </div>
-
-    
-    
 </body>
 </html>

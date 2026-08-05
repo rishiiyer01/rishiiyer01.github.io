@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>language diffusion pt 1: arithmetic intensity primer - Rishi Iyer</title>
+    <link rel="stylesheet" href="https://use.typekit.net/upp3wws.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+        ]});"></script>
+    <style>
+        .container {
+            max-width: 800px;
+        }
+
+        .post-header {
+            margin-bottom: 40px;
+        }
+
+        .post-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .post-meta {
+            font-family: var(--mono);
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .post-content {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        img {
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        figure {
+            margin: 20px 0;
+        }
+
+        figure img {
+            display: block;
+            margin: 0 auto;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        figcaption {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        blockquote {
+            border-left: 3px solid #c9a25a;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: var(--muted);
+        }
+
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 4px 0;
+        }
+
+        .references {
+            font-size: 15px;
+            padding-left: 24px;
+            margin: 20px 0;
+        }
+
+        .references li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="../writings.html" class="back-link">← back to writings</a>
+
+    <div class="container">
+        <article>
+            <header class="post-header">
+                <h1 class="post-title">language diffusion pt 1: arithmetic intensity primer</h1>
+                <div class="post-meta">
+                    diffusion
+                </div>
+            </header>
+
+            <div class="post-content">
+                <blockquote>
+                    <p>Note: I am not going to include any ideas during this series that would otherwise
+                    appear in upcoming papers as a part of the main narrative.</p>
+                </blockquote>
+
+                <p>
+                    Prior to this blog post I would strongly suggest reading these three papers:
+                    <a href="https://arxiv.org/abs/2503.09573" target="_blank">Block Diffusion: Interpolating Between Autoregressive and Diffusion Language Models</a>,
+                    <a href="https://arxiv.org/abs/2509.04185" target="_blank">Set Block Decoding is a Language Model Inference Accelerator</a>, and
+                    <a href="https://arxiv.org/abs/2511.08923" target="_blank">TiDAR: Think in Diffusion, Talk in Autoregression</a>.
+                </p>
+
+                <p>
+                    Diffusion models have accumulated much allure; various companies up until this point
+                    have released diffusion language models with some success, including
+                    <a href="https://www.inceptionlabs.ai/blog/introducing-mercury-2" target="_blank">Mercury</a>,
+                    <a href="https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/" target="_blank">Gemma diffusion</a>,
+                    NVIDIA (<a href="https://arxiv.org/abs/2607.05722" target="_blank">1</a>,
+                    <a href="https://arxiv.org/abs/2606.26493" target="_blank">2</a>,
+                    <a href="https://arxiv.org/abs/2511.08923" target="_blank">3</a>), and of course
+                    <a href="https://www.zyphra.com/our-work/zaya1-8b-diffusion-preview" target="_blank">our upcoming model</a>.
+                </p>
+
+                <p>There are various hardware considerations one must make when pursuing a block diffusion
+                style model.</p>
+
+                <h2>Arithmetic Intensity</h2>
+
+                <p>
+                    The arithmetic intensity of an operation can be defined as the flops of an operation
+                    divided by the bytes needed to be pulled through the memory hierarchy for that operation:
+                </p>
+
+                \[
+                \mathrm{AI} = \frac{\text{FLOPs}}{\text{bytes moved}}
+                \]
+
+                <p>
+                    We are going to ignore prefill and training since these should of course be compute
+                    bound. Let's derive the arithmetic intensity for an MoE during decode, which consists of
+                    GQA and an expert layer with MLPs (in its simplest form). Take batch size \(B\), context
+                    length \(S\), head dimension \(d\), \(n_q\) query heads, and \(n_{kv}\) key-value heads.
+                </p>
+
+                <h3>Attention</h3>
+
+                <p>Per decode step, the \(QK^\top\) matmul and the \(AV\) matmul each cost
+                \(2\,B\,S\,n_q\,d\) flops:</p>
+
+                \[
+                \text{FLOPs}_{\text{attn}} \approx \underbrace{2\,B\,S\,n_q\,d}_{QK^\top}
+                + \underbrace{2\,B\,S\,n_q\,d}_{AV} = 4\,B\,S\,n_q\,d
+                \]
+
+                <p>The bytes are dominated by streaming the KV cache (two tensors, 2 bytes each in bf16 —
+                query/output bytes are negligible since \(S \cdot n_{kv} \gg 1 \cdot n_q\) for most of
+                decode):</p>
+
+                \[
+                \text{Bytes}_{\text{attn}} \approx 2 \cdot 2 \cdot B\,S\,n_{kv}\,d = 4\,B\,S\,n_{kv}\,d
+                \]
+
+                <p>Therefore, the arithmetic intensity of attention during decode is simply the number of
+                query heads per KV head, or the group size:</p>
+
+                \[
+                \mathrm{AI}_{\text{attn}} = \frac{4\,B\,S\,n_q\,d}{4\,B\,S\,n_{kv}\,d}
+                = \frac{n_q}{n_{kv}} = G
+                \]
+
+                <p>
+                    Attention arithmetic intensity is batch-invariant during decode, because every new
+                    request brings its own KV cache. Batching helps MoE (below) but does nothing for
+                    attention — keep this asymmetry in mind, it's the reason block diffusion is interesting
+                    from a hardware perspective. While the attention is batch invariant, empirical speedup
+                    can be achieved by scaling batch, as this increases occupancy and gets you closer to the
+                    bandwidth peak that our calculations were based on.
+                </p>
+
+                <h3>MoE</h3>
+
+                <p>With model dimension \(d_{\text{model}}\), expert FFN dimension \(d_{\text{ffn}}\),
+                \(E\) experts, and \(k\) experts active per token (ignoring the activation function), the
+                expert layer costs:</p>
+
+                \[
+                \text{FLOPs}_{\text{moe}} \approx 4\,B\,d_{\text{model}}\,d_{\text{ffn}}\,k
+                \]
+
+                <p>while at decode batch sizes every expert's weights still have to be pulled through the
+                memory hierarchy (two projection matrices, 2 bytes each in bf16):</p>
+
+                \[
+                \text{Bytes}_{\text{moe}} \approx 4\,d_{\text{model}}\,d_{\text{ffn}}\,E
+                \]
+
+                <p>In theory, with a balanced MoE the arithmetic intensity is:</p>
+
+                \[
+                \mathrm{AI}_{\text{moe}} = \frac{B\,k}{E}
+                \]
+
+                <p>For our models (\(k=1\)) this is just \(B/E\), which is incredibly low.</p>
+
+                <h3>The roofline</h3>
+
+                <p>
+                    Remember that the arithmetic intensity is a theoretical calculation that no kernel can
+                    beat, and it can tell you the theoretical speed of your operation. However, the issue
+                    with both of the numbers above is that they are generally extremely memory bandwidth
+                    bound, and sit you left of the ridge on a roofline plot. The ridge sits where the two
+                    bounds meet:
+                </p>
+
+                \[
+                \mathrm{AI}^{*} = \frac{\text{peak FLOP/s}}{\text{memory bandwidth}}
+                \qquad \left(\text{H100, bf16:}\ \frac{989\ \text{TFLOP/s}}{3.35\ \text{TB/s}}
+                \approx 295\ \text{FLOPs/byte}\right)
+                \]
+
+                <figure>
+                    <img src="roofline.png" alt="Roofline plot showing arithmetic intensity of GQA, MLA, and CCA attention variants relative to the H100 ridge">
+                    <figcaption>from <a href="https://arxiv.org/abs/2510.04476" target="_blank">Compressed Convolutional Attention</a></figcaption>
+                </figure>
+
+                <p>
+                    For attention, which is batch invariant and simplest, most GQA configurations place you
+                    squarely on the left of the ridge, where your performance is capped due to memory
+                    bandwidth. For MoE, under most conventional decoding setups, unless you have extremely
+                    large batch sizes, it is quite difficult to approach compute bound.
+                </p>
+
+                <p>
+                    If you notice in this plot that MLA has significantly higher arithmetic intensity, it is
+                    because of the shared-KV MQA mode switch aspect of MLA, which DeepSeek still utilizes
+                    today by simply running their attention entirely with shared-KV MQA. While this places
+                    MLA near the ridge, the intensity is bought with extra flops that could be better
+                    utilized. If you then stack another intensity-scaling technique on top (spec dec, or
+                    diffusion as we'll see), you can overshoot into being compute bound, at which point
+                    falling back from shared-KV MQA or using a GQA arch and spending the idle bandwidth
+                    instead can actually be more performant (although who knows what devices DeepSeek runs
+                    inference on).
+                </p>
+
+                <h2>Block diffusion</h2>
+
+                <p>
+                    In block diffusion style models, each forward pass during decode processes \(b\)
+                    (block size) query tokens per sequence instead of 1. The KV cache bytes are unchanged
+                    and the expert weight bytes are unchanged, so only the flops scale.
+                </p>
+
+                <figure>
+                    <img src="sbd-block.png" style="max-width: 640px;" alt="Set block decoding scheme: causal attention with KV cache over the prefix, bidirectional attention within the block of masked tokens being decoded">
+                    <figcaption>from <a href="https://arxiv.org/abs/2509.04185" target="_blank">Set Block Decoding</a></figcaption>
+                </figure>
+
+                <p>
+                    Here is an example of a potential diffusion style with
+                    <a href="https://arxiv.org/abs/2509.04185" target="_blank">set block decoding</a>,
+                    which decodes a block of tokens each pass using bidirectional attention within the
+                    block and an entropy bounded sampler. The calcs below also apply to block diffusion,
+                    block uniform state diffusion (Gemma), and TiDAR (although only in a two-forward mode).
+                </p>
+
+                <p>Some fermi calcs — for attention:</p>
+
+                \[
+                \mathrm{AI}_{\text{attn}} = \frac{4\,B\,b\,S\,n_q\,d}{4\,B\,S\,n_{kv}\,d}
+                = b \cdot \frac{n_q}{n_{kv}} = b\,G
+                \]
+
+                <p>and for the expert layer:</p>
+
+                \[
+                \mathrm{AI}_{\text{moe}} = \frac{4\,B\,b\,d_{\text{model}}\,d_{\text{ffn}}\,k}
+                {4\,d_{\text{model}}\,d_{\text{ffn}}\,E} = \frac{B\,b\,k}{E}
+                \]
+
+                <p>
+                    Both ops scale by block size. On an H100 (~989 bf16 TFLOPs, 3.35 TB/s, ridge at ~295
+                    flops/byte): a 64q/8kv GQA config sits at \(\mathrm{AI} = 8\) under traditional AR
+                    decode; with \(b = 32\) it sits at \(256\). An MoE with \(k = 8\) over \(E = 256\)
+                    experts at \(B = 64\) sits at \(\mathrm{AI} = 2\) under AR decode; \(b = 32\) increases
+                    it to \(64\) — note this is still quite memory bandwidth bound, but at least we are
+                    using the tensor cores a little more.
+                </p>
+
+                <p>
+                    Now in <a href="https://arxiv.org/abs/2401.15077" target="_blank">EAGLE</a>,
+                    <a href="https://arxiv.org/abs/2602.06036" target="_blank">dflash</a>,
+                    <a href="https://arxiv.org/abs/2607.05147" target="_blank">dspark</a>,
+                    <a href="https://arxiv.org/abs/2401.10774" target="_blank">medusa</a>, etc., the
+                    argument for speculation is there as well, but oftentimes the verification length for
+                    these models is far below what you would expect a typical block for diffusion to be,
+                    although dflash and spark are closer. The discussion on the overhead of this form of
+                    speculation is out of scope for this post, but I might cover it in a subsequent one.
+                </p>
+
+                <h2>Quantization</h2>
+
+                <p>
+                    Arithmetic intensity arguments change under quantization. The next generation of
+                    devices (the Blackwell series, AMD MI355X, MI455X, etc.) all have much higher
+                    arithmetic intensities in quantized formats like fp8 and fp4. Some numbers of the
+                    rooflines:
+                </p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>GPU</th>
+                            <th>mem bw (TB/s)</th>
+                            <th>bf16 (PF)</th>
+                            <th>fp8 (PF)</th>
+                            <th>fp4 (PF)</th>
+                            <th>ridge bf16</th>
+                            <th>ridge fp8</th>
+                            <th>ridge fp4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>H100</td><td>3.35</td><td>0.99</td><td>1.98</td><td>&ndash;</td><td>295</td><td>591</td><td>&ndash;</td></tr>
+                        <tr><td>H200</td><td>4.8</td><td>0.99</td><td>1.98</td><td>&ndash;</td><td>206</td><td>412</td><td>&ndash;</td></tr>
+                        <tr><td>B200</td><td>8.0</td><td>2.25</td><td>4.5</td><td>9.0</td><td>281</td><td>562</td><td>1125</td></tr>
+                        <tr><td>B300</td><td>8.0</td><td>2.25</td><td>4.5</td><td>15.0</td><td>281</td><td>562</td><td>1875</td></tr>
+                        <tr><td>MI300X</td><td>5.3</td><td>1.31</td><td>2.61</td><td>&ndash;</td><td>247</td><td>493</td><td>&ndash;</td></tr>
+                        <tr><td>MI355X</td><td>8.0</td><td>2.5</td><td>5.0</td><td>10.1</td><td>312</td><td>625</td><td>1263</td></tr>
+                        <tr><td>MI455X</td><td>19.6</td><td>&ndash;</td><td>20</td><td>40</td><td>&ndash;</td><td>1020</td><td>2041</td></tr>
+                    </tbody>
+                </table>
+
+                <p class="post-meta">
+                    Peak dense throughput in PFLOP/s (no 2:4 sparsity); ridge = peak FLOP/s divided by
+                    memory bandwidth, in FLOPs/byte. MI455X figures are AMD's announced numbers (CDNA 5,
+                    2026); its bf16 peak has not been disclosed.
+                </p>
+
+                <p>
+                    Use of the quantized flops has not generally been possible in attention until recently
+                    with sparse attentions
+                    (<a href="https://arxiv.org/abs/2606.13392" target="_blank">MiniMax Sparse Attention</a>,
+                    DeepSeek-V3.2's
+                    <a href="https://arxiv.org/abs/2512.02556" target="_blank">DeepSeek Sparse Attention</a>).
+                    Sparse attentions enable fully quantized indexers, where the bulk of the sequence
+                    mixing flops and latency go. With these sorts of numbers it is practically impossible
+                    to hit the ridge of the roofline with attention without significant diffusion or block
+                    size inference, and thus it is important to start improving such methods in conjunction
+                    with sparse attention. It is far easier to scale flops than bandwidth, and thus we need
+                    to make architecture choices accordingly.
+                </p>
+
+                <p>
+                    The point of this post is a simple derivation that diffusion models have a hardware
+                    aware argument, in that the flops that are used by diffusion models are flops that
+                    would otherwise be unused. This doesn't actually change the throughput unless you have
+                    good toks/NFE, which is an entirely separate post that I'll probably make on what
+                    actually gets you to losslessly have high toks/NFE, since there are about 100 diff
+                    methods out there.
+                </p>
+
+                <h2>References</h2>
+
+                <ol class="references">
+                    <li>M. Arriola, A. Gokaslan, J. T. Chiu, Z. Yang, Z. Qi, J. Han, S. S. Sahoo, V. Kuleshov.
+                        &ldquo;Block Diffusion: Interpolating Between Autoregressive and Diffusion Language Models.&rdquo;
+                        <a href="https://arxiv.org/abs/2503.09573" target="_blank">arXiv:2503.09573</a>, 2025.</li>
+                    <li>I. Gat, H. Ben-Hamu, M. Havasi, D. Haziza, J. Reizenstein, G. Synnaeve, D. Lopez-Paz,
+                        B. Karrer, Y. Lipman.
+                        &ldquo;Set Block Decoding is a Language Model Inference Accelerator.&rdquo;
+                        <a href="https://arxiv.org/abs/2509.04185" target="_blank">arXiv:2509.04185</a>, 2025.</li>
+                    <li>J. Liu, X. Dong, Z. Ye, R. Mehta, Y. Fu, V. Singh, J. Kautz, C. Zhang, P. Molchanov.
+                        &ldquo;TiDAR: Think in Diffusion, Talk in Autoregression.&rdquo;
+                        <a href="https://arxiv.org/abs/2511.08923" target="_blank">arXiv:2511.08923</a>, 2025.</li>
+                    <li>Inception Labs.
+                        &ldquo;<a href="https://www.inceptionlabs.ai/blog/introducing-mercury-2" target="_blank">Introducing Mercury 2</a>.&rdquo;
+                        Blog post.</li>
+                    <li>Google.
+                        &ldquo;<a href="https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/" target="_blank">Gemma diffusion: faster text generation</a>.&rdquo;
+                        Blog post.</li>
+                    <li>Y. Fu et al.
+                        &ldquo;Nemotron-Labs-Diffusion: A Tri-Mode Language Model Unifying Autoregressive, Diffusion,
+                        and Self-Speculation Decoding.&rdquo;
+                        <a href="https://arxiv.org/abs/2607.05722" target="_blank">arXiv:2607.05722</a>, 2026.</li>
+                    <li>F. Reda, J. Kamalu, R. Waleffe, M. Patwary, M. Shoeybi, B. Catanzaro.
+                        &ldquo;Nemotron-Labs-TwoTower: Diffusion Language Modeling with Pretrained Autoregressive Context.&rdquo;
+                        <a href="https://arxiv.org/abs/2606.26493" target="_blank">arXiv:2606.26493</a>, 2026.</li>
+                    <li>Zyphra.
+                        &ldquo;<a href="https://www.zyphra.com/our-work/zaya1-8b-diffusion-preview" target="_blank">ZAYA1-8B Diffusion (preview)</a>.&rdquo;
+                        Blog post, 2026.</li>
+                    <li>T. Figliolia, N. Alonso, R. Iyer, Q. Anthony, B. Millidge.
+                        &ldquo;Compressed Convolutional Attention: Efficient Attention in a Compressed Latent Space.&rdquo;
+                        <a href="https://arxiv.org/abs/2510.04476" target="_blank">arXiv:2510.04476</a>, 2025.</li>
+                    <li>Y. Li, F. Wei, C. Zhang, H. Zhang.
+                        &ldquo;EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty.&rdquo;
+                        <a href="https://arxiv.org/abs/2401.15077" target="_blank">arXiv:2401.15077</a>, 2024.</li>
+                    <li>J. Chen, Y. Liang, Z. Liu.
+                        &ldquo;DFlash: Block Diffusion for Flash Speculative Decoding.&rdquo;
+                        <a href="https://arxiv.org/abs/2602.06036" target="_blank">arXiv:2602.06036</a>, 2026.</li>
+                    <li>X. Cheng et al.
+                        &ldquo;DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation.&rdquo;
+                        <a href="https://arxiv.org/abs/2607.05147" target="_blank">arXiv:2607.05147</a>, 2026.</li>
+                    <li>T. Cai, Y. Li, Z. Geng, H. Peng, J. D. Lee, D. Chen, T. Dao.
+                        &ldquo;Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads.&rdquo;
+                        <a href="https://arxiv.org/abs/2401.10774" target="_blank">arXiv:2401.10774</a>, 2024.</li>
+                    <li>X. Lai et al.
+                        &ldquo;MiniMax Sparse Attention.&rdquo;
+                        <a href="https://arxiv.org/abs/2606.13392" target="_blank">arXiv:2606.13392</a>, 2026.</li>
+                    <li>DeepSeek-AI.
+                        &ldquo;DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models.&rdquo;
+                        <a href="https://arxiv.org/abs/2512.02556" target="_blank">arXiv:2512.02556</a>, 2025.</li>
+                </ol>
+
+                <h2>Citation</h2>
+
+                <p>If you found this post useful, please cite it as:</p>
+
+                <pre><code>@misc{iyer2026arithmeticintensity,
+  title  = {language diffusion pt 1: arithmetic intensity primer},
+  author = {Iyer, Rishi},
+  year   = {2026},
+  url    = {https://rishiiyer.com/writings/language-diffusion-pt1.html}
+}</code></pre>
+            </div>
+        </article>
+    </div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+/* ---- fonts ---- */
+
+@font-face {
+    font-family: "Berkeley Mono";
+    src: url("fonts/BerkeleyMonoVariable.woff2") format("woff2-variations");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Tiempos Text";
+    src: url("fonts/TiemposText-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Tiempos Text";
+    src: url("fonts/TiemposText-Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Tiempos Text";
+    src: url("fonts/TiemposText-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Tiempos Text";
+    src: url("fonts/TiemposText-BoldItalic.woff2") format("woff2");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* ---- palette ----
+   bg        #f7f5ef   bone / off-white
+   ink       #4a3626   medium coffee brown
+   heading   #3a2a1c   darker brown
+   muted     #8f8471   dates, metadata
+   accent    #8a4a26   chestnut brown links
+   border    #e2ddd0   hairlines
+   code bg   #eeebe0
+*/
+
+:root {
+    --bg: #f7f5ef;
+    --ink: #4a3626;
+    --heading: #3a2a1c;
+    --muted: #8f8471;
+    --accent: #8a4a26;
+    --border: #e2ddd0;
+    --code-bg: #eeebe0;
+    --serif: "Tiempos Text", Georgia, serif;
+    --mono: "Berkeley Mono", "courier-std", monospace;
+}
+
+/* ---- base ---- */
+
+body {
+    font-family: var(--serif);
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+}
+
+h1, h2, h3 {
+    font-family: var(--serif);
+    color: var(--heading);
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin: 0 0 20px;
+}
+
+/* ---- shared components ---- */
+
+.back-link {
+    font-family: var(--serif);
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.meta {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--muted);
+}
+
+/* ---- code ---- */
+
+pre {
+    background-color: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+code {
+    font-family: var(--mono);
+    font-size: 14px;
+}
+
+p code {
+    background-color: var(--code-bg);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    color: var(--heading);
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 32px 18px 60px;
+    }
+
+    .back-link {
+        position: relative;
+        top: auto;
+        left: auto;
+        display: block;
+        margin: 20px 18px 0;
+    }
+}
