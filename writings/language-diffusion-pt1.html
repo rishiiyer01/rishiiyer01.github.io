@@ -250,7 +250,7 @@
                     diffusion as we'll see), you can overshoot into being compute bound, at which point
                     falling back from shared-KV MQA or using a GQA arch and spending the idle bandwidth
                     instead can actually be more performant (although who knows what devices DeepSeek runs
-                    inference on).
+                    inference on). 
                 </p>
 
                 <h2>Block diffusion</h2>
@@ -294,7 +294,11 @@
                     decode; with \(b = 32\) it sits at \(256\). An MoE with \(k = 8\) over \(E = 256\)
                     experts at \(B = 64\) sits at \(\mathrm{AI} = 2\) under AR decode; \(b = 32\) increases
                     it to \(64\) — note this is still quite memory bandwidth bound, but at least we are
-                    using the tensor cores a little more.
+                    using the tensor cores a little more. One original motivation behind
+                    <a href="https://arxiv.org/abs/2510.04476" target="_blank">CCA</a> was that
+                    eventually we would like our decode workloads to sit on the ridge as well; if it
+                    happened to sit on the ridge from block diffusion, the compressed flops would be of
+                    great use (more room for block size).
                 </p>
 
                 <p>
